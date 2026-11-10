@@ -156,6 +156,17 @@ const otherAudio = musicTrack ? project.data.audio.slice(1) : project.data.audio
 		padding-block: clamp(2rem, 6vw, 5rem);
 	}
 
+	.project-content > :global(.case-contents) {
+		display: flex;
+		flex-wrap: wrap;
+		gap: .5rem 1.25rem;
+		max-width: 70rem;
+		margin: 0 auto 2.5rem;
+		font-size: .85rem;
+		line-height: 1.8;
+	}
+	.project-content :global(.case-contents a) { text-underline-offset: .3em; }
+
 	.back-link {
 		display: inline-flex;
 		align-items: center;

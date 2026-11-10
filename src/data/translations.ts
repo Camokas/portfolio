@@ -1,5 +1,6 @@
 import { softwareTranslations } from "./software";
 import { editorialTranslations } from "./editorialTranslations";
+import { islandsTranslations } from "./islandsTranslations";
 export type SiteLanguage = "en" | "ru";
 
 /**
@@ -596,6 +597,7 @@ export const russianTranslations: Record<string, string> = {
 	"A procedural stylized cloud shader for a mobile game.": "Процедурный стилизованный шейдер облаков для мобильной игры.",
 	"Designed to provide visual variety and seamless cloud patterns. The shader's noise was later baked to improve performance on mobile devices. The original shader offered flexible customization options, with plans to use it for dynamically adjusting cloud coverage in the scene.": "Создан для визуального разнообразия и бесшовных облачных узоров. Позже шум шейдера был запечён для повышения производительности на мобильных устройствах. Изначальная версия позволяла гибко настраивать облака и предполагала динамическое изменение облачности сцены.",
 	...editorialTranslations,
+	...islandsTranslations,
 };
 
 export function translateExact(value: string, language: SiteLanguage): string {
