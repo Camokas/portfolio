@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { getImage } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { projectAssetUrl } from "./projectAssetPaths.mjs";
@@ -8,6 +10,7 @@ export interface PreviewMedia {
 	kind: "image" | "video" | "model" | "code" | "shaderGraph" | "atlas";
 	src: string;
 	poster?: string;
+	bounds?: { x: number; y: number; width: number; height: number };
 	sources?: { src: string; type: string }[];
 	label: string;
 	templateIndex?: number;
@@ -27,7 +30,8 @@ export async function projectPreviews(project: CollectionEntry<"projects">): Pro
 	})));
 	for (const atlas of data.atlases) {
 		if (!atlas.showInCards) continue;
-		previews.push({kind: "atlas", src: publicUrl(atlas.image), label: atlas.title});
+		const { bounds } = JSON.parse(readFileSync(resolve("public", atlas.manifest), "utf8"));
+		previews.push({kind: "atlas", src: publicUrl(atlas.image), label: atlas.title, bounds});
 	}
 	for (const video of data.videos) {
 		if (!video.showInCards) continue;

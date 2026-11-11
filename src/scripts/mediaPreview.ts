@@ -27,14 +27,10 @@ class MediaPreview extends HTMLElement {
 		const options = { signal: this.events.signal };
 		document.addEventListener("visibilitychange", () => this.sync(), options);
 		document.addEventListener("portfolio:language-change", () => {
-			for (const [index, element] of this.prepared) {
+			for (const element of this.prepared.values()) {
 				if (element instanceof HTMLImageElement) {
 					const src = localizedMediaUrl(element.src);
 					if (element.src !== new URL(src, document.baseURI).href) element.src = src;
-				}
-				if (this.items[index].kind === "atlas") {
-					const image = element.querySelector("img");
-					if (image) image.src = localizedMediaUrl(image.src);
 				}
 				if (element instanceof HTMLVideoElement) {
 					let changed = false;
@@ -49,7 +45,7 @@ class MediaPreview extends HTMLElement {
 			this.updateVideo();
 		}, options);
 		const initial = this.querySelector<HTMLElement>(".slide");
-		if (initial && (this.items[0].kind === "image" || this.items[0].kind === "shaderGraph" || this.items[0].kind === "atlas")) {
+		if (initial && (this.items[0].kind === "image" || this.items[0].kind === "shaderGraph")) {
 			this.prepared.set(0, initial); this.index = 0;
 			this.shownInCycle.add(0);
 		}
@@ -162,8 +158,20 @@ class MediaPreview extends HTMLElement {
 	}
 	async prepare(item: PreviewMedia, index: number): Promise<HTMLElement> {
 		if (item.kind === "atlas") {
+			const image = await this.image(item.src);
+			const bounds = item.bounds ?? {x: 0, y: 0, width: image.naturalWidth, height: image.naturalHeight};
+			const canvas = document.createElement("canvas");
+			const scale = Math.min(1, 1536 / Math.max(bounds.width, bounds.height));
+			canvas.width = Math.max(1, Math.round(bounds.width * scale));
+			canvas.height = Math.max(1, Math.round(bounds.height * scale));
+			const context = canvas.getContext("2d");
+			if (!context) throw new Error("Atlas preview unavailable");
+			context.imageSmoothingEnabled = false;
+			// Draw the complete occupied atlas once; motion uses CSS transforms only.
+			context.drawImage(image, bounds.x, bounds.y, bounds.width, bounds.height, 0, 0, canvas.width, canvas.height);
 			const layer = document.createElement("div");
-			layer.append(await this.image(item.src));
+			layer.style.setProperty("--atlas-ratio", String(canvas.width / canvas.height));
+			layer.append(canvas);
 			return layer;
 		}
 		if (item.kind === "code") {
