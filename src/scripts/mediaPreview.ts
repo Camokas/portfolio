@@ -171,6 +171,7 @@ class MediaPreview extends HTMLElement {
 			context.drawImage(image, bounds.x, bounds.y, bounds.width, bounds.height, 0, 0, canvas.width, canvas.height);
 			const layer = document.createElement("div");
 			layer.style.setProperty("--atlas-ratio", String(canvas.width / canvas.height));
+			layer.style.setProperty("--atlas-duration", `${MEDIA_INTERVAL_MS}ms`);
 			layer.append(canvas);
 			return layer;
 		}

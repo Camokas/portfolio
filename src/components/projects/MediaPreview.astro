@@ -36,18 +36,17 @@ const initialImage = first?.kind === "image" || first?.kind === "shaderGraph" ? 
 		--sheet-width: max(145cqw, calc(145cqh * var(--atlas-ratio)));
 		--sheet-height: max(145cqh, calc(145cqw / var(--atlas-ratio)));
 		--pan-x: min(40cqw, calc((var(--sheet-width) - 100cqw) / 2));
-		--pan-y: min(30cqh, calc((var(--sheet-height) - 100cqh) / 2));
 		position: absolute; left: 50%; top: 50%;
 		width: var(--sheet-width); height: var(--sheet-height); max-width: none;
 		image-rendering: pixelated;
 		transform: translate(-50%, -50%) rotate(-10deg);
-		animation: atlas-drift 3.5s ease-in-out infinite alternate;
+		animation: atlas-drift var(--atlas-duration, 3500ms) linear infinite alternate;
 		animation-play-state: paused;
 	}
 	media-preview[data-preview-running="true"] :global(.atlas-preview.active canvas) { animation-play-state: running; }
 	@keyframes atlas-drift {
-		from { transform: translate(calc(-50% + var(--pan-x)), calc(-50% + var(--pan-y))) rotate(-10deg); }
-		to { transform: translate(calc(-50% - var(--pan-x)), calc(-50% - var(--pan-y))) rotate(-10deg); }
+		from { transform: translate(-50%, -50%) rotate(-10deg) translateX(var(--pan-x)); }
+		to { transform: translate(-50%, -50%) rotate(-10deg) translateX(calc(0px - var(--pan-x))); }
 	}
 	@media (prefers-reduced-motion: reduce) {
 		media-preview :global(.atlas-preview canvas) { animation: none; }
