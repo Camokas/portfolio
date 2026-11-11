@@ -1,0 +1,158 @@
+---
+title: "Misform"
+summary: "A short first-person horror game: find three rubber ducks in a dark warehouse while creatures assemble themselves from discarded objects."
+direction: "game-development"
+date: 2026-08-26
+dateEnd: 2026-09-09
+mediaLayout: "inline"
+featured: true
+tags: ["Unity", "Horror", "Procedural Assembly", "URP"]
+cover: "projects/GameDevelopming/Misform/Misform_GameplayScreen_3.webp"
+gallery:
+  - image: "projects/GameDevelopming/Misform/Misform_GameplayScreen_1.webp"
+    alt: "The final warehouse: dim lights and dark containers"
+    caption: "The final warehouse: dim lights and dark containers"
+    showInCards: false
+  - image: "projects/GameDevelopming/Misform/Misform_GameplayScreen_2.webp"
+    alt: "A rubber duck hidden among the contents of a container"
+    caption: "A rubber duck hidden among the contents of a container"
+    showInCards: false
+  - image: "projects/GameDevelopming/Misform/Misform_GameplayScreen_3.webp"
+    alt: "A creature built from a mixture of everyday props"
+    caption: "A creature built from a mixture of everyday props"
+    showInCards: true
+  - image: "projects/GameDevelopming/Misform/Misform_GameplayScreen_4.webp"
+    alt: "Open warehouse space between rows of containers"
+    caption: "Open warehouse space between rows of containers"
+    showInCards: true
+  - image: "projects/GameDevelopming/Misform/Misform_GameplayScreen_5.webp"
+    alt: "An assembled creature at the elevator entrance"
+    caption: "An assembled creature at the elevator entrance"
+    showInCards: true
+  - image: "projects/GameDevelopming/Misform/Misform_OldGameplayScreen_1.webp"
+    alt: "An earlier look at the warehouse, shared on 6 September 2026"
+    caption: "An earlier look at the warehouse, shared on 6 September 2026"
+    showInCards: false
+  - image: "projects/GameDevelopming/Misform/Misform_Poster.webp"
+    alt: "Release poster: AI-assisted image processing and Photoshop; not an unedited gameplay screenshot"
+    caption: "Release poster: AI-assisted image processing and Photoshop; not an unedited gameplay screenshot"
+    showInCards: false
+videos:
+  - title: "Misform \u00b7 A recorded run"
+    caption: "Searching containers, collecting ducks, and fighting a creature in the released game."
+    poster: "projects/GameDevelopming/Misform/Misform_Gameplay-poster.webp"
+    autoAspect: true
+    preload: "none"
+    showInCards: false
+    sources:
+      - src: "projects/GameDevelopming/Misform/Misform_Gameplay_Web.mp4"
+        type: "video/mp4"
+  - title: "Early assembly experiment \u00b7 1"
+    caption: "An early test scene showing the assembly algorithm, before the final presentation and optimisation. Silent recording."
+    poster: "projects/GameDevelopming/Misform/Misform_Prototype_1-poster.webp"
+    autoAspect: true
+    preload: "none"
+    showInCards: false
+    sources:
+      - src: "projects/GameDevelopming/Misform/Misform_Prototype_1.webm"
+        type: "video/webm"
+      - src: "projects/GameDevelopming/Misform/Misform_Prototype_1.mp4"
+        type: "video/mp4"
+  - title: "Early assembly experiment \u00b7 2"
+    caption: "Another early assembly test. The final game uses newly spawned props instead of collecting objects from the surrounding level. Silent recording."
+    poster: "projects/GameDevelopming/Misform/Misform_Prototype_2-poster.webp"
+    autoAspect: true
+    preload: "none"
+    showInCards: false
+    sources:
+      - src: "projects/GameDevelopming/Misform/Misform_Prototype_2.webm"
+        type: "video/webm"
+      - src: "projects/GameDevelopming/Misform/Misform_Prototype_2.mp4"
+        type: "video/mp4"
+  - title: "Misform \u00b7 Release trailer"
+    caption: "The trailer I recorded and edited for the game release."
+    poster: "projects/GameDevelopming/Misform/Misform_Trailer-poster.webp"
+    autoAspect: true
+    preload: "none"
+    showInCards: false
+    sources:
+      - src: "projects/GameDevelopming/Misform/MISFORM \uff5c Trailer.mp4"
+        type: "video/mp4"
+links:
+  - label: "Play on itch.io"
+    href: "https://camoka.itch.io/misform"
+    kind: "store"
+  - label: "Watch the release trailer"
+    href: "https://www.youtube.com/watch?v=u7uAYxZaRu0"
+    kind: "website"
+---
+
+## Three ducks and a way out
+
+The player starts in an elevator with the codes of three target containers. Search the warehouse, find a rubber duck in each one, and bring all three to the collection box in the elevator. Delivering the last duck ends the game successfully.
+
+A successful run takes roughly ten minutes. Each new run starts fresh, without persistent saves. Ammunition and flashlight batteries can be found along the way, while the enemy threat grows with time and progress.
+
+<Video index={1} group open />
+
+## Reading the warehouse
+
+The interface gives container codes rather than a route. The player has to locate the right containers and search their dark interiors. Generation varies which containers are present, their contents, and the duck locations; it always provides the three ducks needed to win.
+
+<Gallery indices={[2, 1]} group open />
+
+## Giving the clutter a skeleton
+
+The enemy assembly system is the part I am most proud of. I defined a skeleton with Bézier curves and distributed attachment points along them. Each prop has parameters describing which body regions it suits, influencing the probability of where it will attach.
+
+Once assembled, the creature uses animation clips made in Unity. The clips do not adapt to each individual prop or body shape. The two prototype recordings show early working assembly algorithms in a test scene.
+
+<Video index={2} group open />
+
+## Keeping the assembly affordable
+
+The first approach pulled the attached objects toward their targets every frame. Physics and searching the surroundings for props made the enemy the most expensive part of the game. I moved to Joint connections and refined the algorithms.
+
+In the release, the creature spawns suitable objects around itself and assembles them. It looks as though nearby clutter is coming to life, but it does not take the existing props from the level. I also hid container contents when they were not visible or created them only as the player approached.
+
+<Video index={3} group open />
+
+## Objects that can be shot away
+
+A hit damages both the creature and the struck object. When the object loses its health, it falls off; when the creature loses its health, the whole body collapses. It cannot regenerate. This gave the assembled body a direct role in combat.
+
+The Desert Eagle delivers a precise, powerful hit; the shotgun spreads weaker individual pellets. The enemy targets the player from spawn and moves using Unity NavMesh. Its appearance varies, while health and speed depend mainly on the difficulty reached during the run.
+
+<Gallery indices={[3, 5]} group open />
+
+## Tension in an almost empty space
+
+Dim ceiling lights leave the containers difficult to search without a flashlight. Fog, sound, and the restrained PS1-inspired look support the feeling of an empty, quiet place where you cannot be sure you are alone. I mixed CC0 sounds from Freesound for the atmosphere.
+
+The red bar is health and the green bar is running stamina. Escaping a creature can exhaust the player, while searching takes time. The release keeps its settings small: sound volume and mouse sensitivity.
+
+<Gallery indices={[4, 6]} group open />
+
+## A smaller idea, brought to release
+
+The first ideas and prototypes date to May–June 2026. The main development push ran from 26 August to the release on 9 September: about two weeks of bringing an existing foundation to a finished game.
+
+The original plan involved procedural hotel floors, multiplayer, and interactions between different weapons and materials. I reduced that scope to one short single-player objective. The final stretch went into polishing, fixing small defects, and testing: a friend checked the game thoroughly while I tried combinations intended to break it.
+
+<Video index={4} group open />
+
+## Independent code and a finished result
+
+I wrote the gameplay code myself to test whether I could still finish a game independently. AI assistance was limited to small routine automations. The models and animations were created manually; some modelling references were AI-generated. The release poster used AI-assisted image processing and Photoshop.
+
+Misform was released for Windows as version 0.1.0, its only published version. The source code remains closed. The most useful result was learning that I could finish and release a game in less than a month, rather than keep expanding it for another year.
+
+<Image index={7} group open />
+
+<Links open />
+
+<nav className="case-contents" aria-label="Related work from Misform">
+  <a href="../../3dmodeling/misform-models/">Explore the props in 3D</a>
+  <a href="../../animation/misform-first-person-animation/">First-person animation</a>
+  <a href="../../videoediting/camoka-youtube-gamedev/">Trailer editing and other videos</a>
+</nav>

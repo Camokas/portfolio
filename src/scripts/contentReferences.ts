@@ -5,7 +5,7 @@ const rendered = new WeakMap<HTMLElement, string>();
 const destinations: Record<string, string | null> = JSON.parse(document.getElementById("content-references")?.dataset.targets || "{}");
 const terms: Record<string, string> = {
 	"IsLands": "gamedevelopming/islands",
-	"Misform": "game-development/misform",
+	"Misform": "gamedevelopming/misform",
 	"Adobe Audition": "software/adobe-audition", "Audition": "software/adobe-audition",
 	"After Effects": "software/after-effects", "Premiere Pro": "software/premiere-pro",
 	"Media Encoder": "software/media-encoder", "OBS": "software/obs",
