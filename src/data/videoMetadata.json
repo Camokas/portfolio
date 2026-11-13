@@ -430,29 +430,5 @@
     "height": 1080,
     "poster": "projects/GameDevelopming/Misform/Misform_Trailer-poster.webp",
     "hash": "b85ec3d1528fb6a8370f8dc009af62994d9a51a12cc57789f762a88d66048c12"
-  },
-  "projects/GameDevelopming/CloneNumberEight/MainQuest.mp4": {
-    "width": 1920,
-    "height": 1080,
-    "poster": "projects/GameDevelopming/CloneNumberEight/MainQuest-poster.webp",
-    "hash": "28a56fc10a48b1357485fd9db9c1af4b748a0bc90ab0018542d49c1d53b6bd3e"
-  },
-  "projects/GameDevelopming/CloneNumberEight/MushroomChallenge.mp4": {
-    "width": 1920,
-    "height": 1080,
-    "poster": "projects/GameDevelopming/CloneNumberEight/MushroomChallenge-poster.webp",
-    "hash": "63dd0a2db7d8753ab072f24bc40ab9c0d9b43f7f5e78b866757f26cb0bc47b61"
-  },
-  "projects/GameDevelopming/CloneNumberEight/CaveChallenge.mp4": {
-    "width": 1920,
-    "height": 1080,
-    "poster": "projects/GameDevelopming/CloneNumberEight/CaveChallenge-poster.webp",
-    "hash": "1fc9a3b5333af4214b76fbdfa4664100578bd1b27600419ef9304a677c68241e"
-  },
-  "projects/GameDevelopming/CloneNumberEight/BlueprintLogic.mp4": {
-    "width": 1920,
-    "height": 1080,
-    "poster": "projects/GameDevelopming/CloneNumberEight/BlueprintLogic-poster.webp",
-    "hash": "9d77b50578ea8c772e4632d1fa5735b3e5c03bd4245d1faace456717c8ddd530"
   }
 }
