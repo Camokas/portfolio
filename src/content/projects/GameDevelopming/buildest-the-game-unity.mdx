@@ -1,0 +1,113 @@
+---
+title: "Buildest The Game · Unity"
+summary: "An unfinished return to Buildest: procedural terrain, a central chunk manager, animated interfaces, and a lesson in keeping technical work connected to gameplay."
+direction: "game-development"
+date: 2022-12-01
+dateApproximate: true
+dateEnd: 2025-05-05
+mediaLayout: "inline"
+featured: false
+tags: ["Unity", "C#", "Procedural Generation", "Prototype"]
+cover: "projects/GameDevelopming/BuildestUnity/Forest.webp"
+gallery:
+  - image: "projects/GameDevelopming/BuildestUnity/Forest.webp"
+    alt: "An intermediate stylised forest scene"
+    caption: "An intermediate stylised forest scene"
+    showInCards: true
+  - image: "projects/GameDevelopming/BuildestUnity/TerrainMesh.webp"
+    alt: "An early terrain mesh in the editor"
+    caption: "An early terrain mesh in the editor"
+    showInCards: false
+  - image: "projects/GameDevelopming/BuildestUnity/TerrainView.webp"
+    alt: "Testing the generated terrain from first person"
+    caption: "Testing the generated terrain from first person"
+    showInCards: false
+  - image: "projects/GameDevelopming/BuildestUnity/TerrainShapes.webp"
+    alt: "Experiments with terrain shapes and noise"
+    caption: "Experiments with terrain shapes and noise"
+    showInCards: false
+  - image: "projects/GameDevelopming/BuildestUnity/ChunkTest.webp"
+    alt: "A generation test with simple placeholder objects"
+    caption: "A generation test with simple placeholder objects"
+    showInCards: false
+  - image: "projects/GameDevelopming/BuildestUnity/DetailedTrees.webp"
+    alt: "An earlier forest appearance during development"
+    caption: "An earlier forest appearance during development"
+    showInCards: true
+  - image: "projects/GameDevelopming/BuildestUnity/DollEditor.webp"
+    alt: "Work on the wooden character in Blender; this game version was later lost"
+    caption: "Work on the wooden character in Blender; this game version was later lost"
+    showInCards: false
+  - image: "projects/GameDevelopming/BuildestUnity/WorldMenu.webp"
+    alt: "Archived world-creation interface; not every option was connected to gameplay"
+    caption: "Archived world-creation interface; not every option was connected to gameplay"
+    showInCards: false
+  - image: "projects/GameDevelopming/BuildestUnity/ForestEditor.webp"
+    alt: "The stylised forest during an intermediate editor test"
+    caption: "The stylised forest during an intermediate editor test"
+    showInCards: false
+  - image: "projects/3DModeling/BuildestTheGame/Doll/BuildestTheGame_Doll_PoseRender.jpg"
+    alt: "The wooden character: a surviving model from an intermediate game version"
+    caption: "The wooden character: a surviving model from an intermediate game version"
+    showInCards: true
+links:
+  - label: "Unfinished prototype on itch.io"
+    href: "https://camoka.itch.io/buildest"
+    kind: "store"
+---
+
+## Returning to a procedural world
+
+The Unity version was a new attempt to develop the idea of Buildest The Game. I wanted a terrain with height variation and a stronger survival focus. The surviving archive begins in December 2022 and records several stages and later returns; I finally stopped development on 5 May 2025.
+
+The last build remained a technical prototype: moving, jumping, creating and saving worlds, and changing some settings worked. Resource gathering, crafting, and building never became a working gameplay loop. The forest and character images on this page document intermediate stages.
+
+<Image index={1} group open />
+
+## Shaping a mesh with noise
+
+I generated my own mesh and deformed its vertices using FastNoiseLite. Different combinations of noise shaped experiments with hills, plains, mountains, rivers, and biomes. The archived terrain screenshots show stages of that same generator.
+
+Tree placement also depended on noise: processing a terrain vertex triggered a check for a structure at that location. I experimented with caves, but never found a satisfactory way to turn the surface mesh into enclosed underground spaces.
+
+<Gallery indices={[2, 3, 4]} group open />
+
+## Managing chunks in one place
+
+A single manager tracked the chunks around the player. It converted the player’s world position into the coordinates needed for chunk placement, checked lists of occupied positions, and determined where new chunks were required.
+
+I wrote the C# code myself; AI served as a consultant and suggested solutions. Readability and extensibility were priorities because I expected to add much more content. The project helped me practise organising generation and the surrounding game code.
+
+<Image index={5} group open />
+
+## A changing visual direction
+
+The visuals moved from more detailed forest experiments towards simpler, stylised trees. Alongside the generator, I made a wooden character, its mechanical rig, and first-person animations. These were development stages, not a complete set of features preserved in the final download.
+
+The game version with the doll and its movement animations was lost. The surviving models, animation exports, and screenshots are presented in their own portfolio pages.
+
+<Gallery indices={[6, 7, 10]} group open />
+
+<nav class="project-section-nav" aria-label="Related visual work"><a href="../../3dmodeling/buildest-the-game-models/">Character & trees</a><a href="../../animation/buildest-first-person-hands/">First-person animations</a><a href="../../shaders/firstbuildest/firstbuildest-customtreeshader/">Foliage shader</a></nav>
+
+## Interface work around an unfinished game
+
+Creating and saving worlds worked, along with settings such as mouse sensitivity and draw distance. Other menu options remained disconnected from gameplay. I also developed coordinated animations for buttons and screens, combining Unity animation clips, Animator, and code.
+
+I created the project’s visual work and music myself, using FastNoiseLite as the terrain-noise library. Some model references were AI-generated, as noted on the modelling page. My track Adventure played in the menu.
+
+<Image index={8} group open />
+
+<nav class="project-section-nav" aria-label="Related interface and music"><a href="../../animation/buildest-ui-animation/">Interface animation</a><a href="../../music/adventure/">Adventure</a></nav>
+
+## When optimisation stopped the game moving forward
+
+Large numbers of objects repeatedly became a performance problem. I kept trying to reduce the rendering cost, while the playable part of the project barely progressed. In the later build available on itch.io, I removed extra animation and the doll character and focused on performance and extensibility.
+
+Stopping the project made the imbalance clear: I had concentrated on generation and optimisation without forming a complete gameplay loop. The useful result was experience with procedural generation, object-oriented code, and internal organisation that later helped me build IsLands.
+
+<Image index={9} group open />
+
+<Links open />
+
+<nav class="project-section-nav" aria-label="Earlier game"><a href="../buildest-the-game-ue/">Buildest The Game · Unreal Engine</a></nav>

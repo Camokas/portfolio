@@ -5,6 +5,7 @@ import { misformTranslations } from "./misformTranslations";
 import { cloneNumberEightTranslations } from "./cloneNumberEightTranslations";
 import { toTheSkyTranslations } from "./toTheSkyTranslations";
 import { buildestUETranslations } from "./buildestUETranslations";
+import { buildestUnityTranslations } from "./buildestUnityTranslations";
 export type SiteLanguage = "en" | "ru";
 
 /**
@@ -606,6 +607,7 @@ export const russianTranslations: Record<string, string> = {
 	...cloneNumberEightTranslations,
 	...toTheSkyTranslations,
 	...buildestUETranslations,
+	...buildestUnityTranslations,
 };
 
 export function translateExact(value: string, language: SiteLanguage): string {
