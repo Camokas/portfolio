@@ -1,0 +1,148 @@
+---
+title: "Buildest The Game · Unreal Engine"
+summary: "My first large procedural game: gathering resources and building in a forest that grows as you explore, with gameplay systems written in Blueprint."
+direction: "game-development"
+date: 2020-11-11
+dateEnd: 2021-02-08
+mediaLayout: "inline"
+featured: false
+tags: ["Unreal Engine", "Blueprint", "Procedural Generation", "Building"]
+cover: "projects/GameDevelopming/BuildestUE/Forest.webp"
+gallery:
+  - image: "projects/GameDevelopming/BuildestUE/Forest.webp"
+    alt: "The released game: a forest explored from first person"
+    caption: "The released game: a forest explored from first person"
+    showInCards: true
+  - image: "projects/GameDevelopming/BuildestUE/Deer.webp"
+    alt: "An animal in the generated forest"
+    caption: "An animal in the generated forest"
+    showInCards: true
+  - image: "projects/GameDevelopming/BuildestUE/WinterEdge.webp"
+    alt: "Winter vegetation and a placed fence in the released game"
+    caption: "Winter vegetation and a placed fence in the released game"
+    showInCards: true
+  - image: "projects/GameDevelopming/BuildestUE/MenuScene_Editor.webp"
+    alt: "The old main-menu scene revisited in the editor"
+    caption: "The old main-menu scene revisited in the editor"
+    showInCards: false
+  - image: "projects/GameDevelopming/BuildestUE/MainMenu.webp"
+    alt: "The main menu in the surviving build"
+    caption: "The main menu in the surviving build"
+    showInCards: false
+  - image: "projects/GameDevelopming/BuildestUE/Guide_Controls.webp"
+    alt: "The in-game controls guide"
+    caption: "The in-game controls guide"
+    showInCards: false
+  - image: "projects/GameDevelopming/BuildestUE/Guide_BiomesAnimals.webp"
+    alt: "The in-game guide to biomes and animals"
+    caption: "The in-game guide to biomes and animals"
+    showInCards: false
+  - image: "projects/GameDevelopming/BuildestUE/GraphicsSettings.webp"
+    alt: "Graphics and display settings"
+    caption: "Graphics and display settings"
+    showInCards: false
+  - image: "projects/GameDevelopming/BuildestUE/WorldSetup.webp"
+    alt: "World creation: mode, spawning, time of day, and music"
+    caption: "World creation: mode, spawning, time of day, and music"
+    showInCards: false
+  - image: "projects/GameDevelopming/BuildestUE/Crafting.webp"
+    alt: "The crafting menu and its log costs"
+    caption: "The crafting menu and its log costs"
+    showInCards: false
+  - image: "projects/GameDevelopming/BuildestUE/NoSaveWarning.webp"
+    alt: "The pause menu warns that leaving will lose the current world"
+    caption: "The pause menu warns that leaving will lose the current world"
+    showInCards: false
+  - image: "projects/GameDevelopming/BuildestUE/FencePreview.webp"
+    alt: "The translucent fence preview before placement"
+    caption: "The translucent fence preview before placement"
+    showInCards: false
+  - image: "projects/GameDevelopming/BuildestUE/Blueprint.webp"
+    alt: "A static frame of Blueprint work from an early development recording"
+    caption: "A static frame of Blueprint work from an early development recording"
+    showInCards: false
+  - image: "projects/GameDevelopming/BuildestUE/ChunkPrefab.webp"
+    alt: "The chunk setup in an early development recording"
+    caption: "The chunk setup in an early development recording"
+    showInCards: false
+links:
+  - label: "Beta 1.0 on itch.io"
+    href: "https://camoka.itch.io/buildest-ue"
+    kind: "store"
+---
+
+## A forest built as the player moves
+
+Buildest The Game was my first large procedural project and an important step in learning Blueprint. It centred on gathering wood and building in a generated forest. The first release appeared on 11 November 2020, followed by Beta 1.0 on 8 February 2021.
+
+I wanted a space for creativity under simple resource constraints. There were trees, animals, potatoes, two biomes, and occasional structures. I developed the gameplay logic myself using tutorials and documentation; the ready-made assets supplied models, materials, and animal animations.
+
+<Image index={1} group open />
+
+## Choosing how the world begins
+
+A skippable intro led to the main menu. Create Level offered survival or creative mode, prop density, winter-biome frequency, a chunk-spawn delay, preset time of day, and a music toggle. The time setting moved the sun and adjusted the sky and lighting to a prepared morning, day, evening, or night state.
+
+Survival required collecting wood. Creative mode provided flight, disabled hunger consumption, and started with ten million logs: my practical substitute for an unlimited supply at the time. Prop density controlled how many trees, potatoes, rocks, and grass objects appeared on a chunk.
+
+<Gallery indices={[5, 9]} group open />
+
+## Triggers and raycasts instead of a fixed map
+
+Each chunk was a prepared actor with a player trigger. Stepping onto it started raycasts that checked for neighbouring chunks and created new ones where they were missing. The chunk also received a random selection of props. During world setup the player remained in the air; Create dropped them onto the starting chunk and began that chain.
+
+Generation continued as the player explored. It used randomness without a seed or deterministic world reproduction. Each chunk checked its distance from the player every tick and hid itself when far away.
+
+<Image index={14} group open />
+
+## A route that influenced the biomes
+
+The chunk under the player influenced which chunks would be generated next. Seeking out winter chunks could make winter spread further; choosing other routes changed that result. The player’s movement therefore affected the shape of the biome distribution.
+
+Winter chunks used their own tree, grass, and rock assets and the animals assigned to that biome. The built-in guide described these differences alongside the controls and wildlife.
+
+<Gallery indices={[3, 7]} group open />
+
+## From a felled tree to a placed object
+
+An axe interaction raycast checked for a nearby tree and made a small random felling check. On success, the tree changed to a ragdoll version, fell, disappeared, and dropped a random amount of wood.
+
+The E-key crafting menu spent logs and opened a translucent placement preview. A left click confirmed the object on a collider surface. Placement was free-form, without a grid. Posts cost 2 logs, fences 4, pallets 7, stairs 10, and a table-and-chairs group 20.
+
+<Gallery indices={[10, 12]} group open />
+
+## Wildlife, food, and generated structures
+
+I wrote the animal behaviour too. A forward raycast measured the distance to obstacles; when something was close, the animal turned smoothly until the way was clear. It was a simple system and animals could still fall off chunk edges.
+
+Potatoes and animals killed with the axe replenished hunger. A killed animal changed to a ragdoll. Village assets could also appear as rare generated props, adding structures to the forest.
+
+<Image index={2} group open />
+
+## A scene behind the menu
+
+The main menu used an autumn forest scene with animal idle animations and moving grass and foliage. I later reopened the old project to capture another view of that scene. The last version offered graphics and display settings; earlier versions also had sound settings.
+
+<Gallery indices={[4, 8]} group open />
+
+## Seeing a procedural system work
+
+Generation was the most rewarding part for me: a visible result of the logic I had assembled. Working out how to track movement and extend the world took time. This implementation worked for the project, and later games gave me better ways to approach the same problem.
+
+The early recording shows that Blueprint work. Subsequent releases fixed bugs, attempted optimisation, and added assets, sounds, food, and health. I eventually moved to another project, but the idea of a procedural world with biomes later led me to revisit Buildest in Unity.
+
+<Image index={13} group open />
+
+## What remained unfinished in the beta
+
+Worlds and progress were not saved. Hunger could drain health, but reaching zero health did not end the game. These were limits of the beta rather than a complete survival progression.
+
+Hiding distant chunks did not solve object cleanup. Accumulating chunks and props, together with frequent per-frame checks, made long sessions heavier. The surviving beta preserves both the working systems and those early technical limitations.
+
+<Image index={11} group open />
+
+## Archived controls guide
+
+<Image index={6} />
+
+<Links open />
