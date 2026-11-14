@@ -1,0 +1,109 @@
+---
+title: "ToTheSky 1 / 2"
+summary: "My first Unity game, released on Android, followed by an unfinished sequel explored first in 3D and then through a new 2D interface."
+direction: "game-development"
+date: 2022-02-20
+mediaLayout: "inline"
+featured: false
+tags: ["Unity", "Android", "C#", "UI Animation"]
+cover: "projects/GameDevelopming/ToTheSky/OriginalMenu.webp"
+gallery:
+  - image: "projects/GameDevelopming/ToTheSky/OriginalMenu.webp"
+    alt: "The first game: main menu and saved high score"
+    caption: "The first game: main menu and saved high score"
+    showInCards: true
+  - image: "projects/GameDevelopming/ToTheSky/Gameplay.webp"
+    alt: "The first game: the star, falling clouds, and touch controls"
+    caption: "The first game: the star, falling clouds, and touch controls"
+    showInCards: true
+  - image: "projects/GameDevelopming/ToTheSky/SkinShop.webp"
+    alt: "The original star-skin shop"
+    caption: "The original star-skin shop"
+    showInCards: true
+  - image: "projects/GameDevelopming/ToTheSky/ColourControls.webp"
+    alt: "Star colour controls in the first game"
+    caption: "Star colour controls in the first game"
+    showInCards: false
+  - image: "projects/GameDevelopming/ToTheSky/SecretCodes_Unity.webp"
+    alt: "Animating the coin-code reward screen in Unity"
+    caption: "Animating the coin-code reward screen in Unity"
+    showInCards: false
+  - image: "projects/GameDevelopming/ToTheSky/StoreArtwork.webp"
+    alt: "Archived promotional artwork for the Google Play release"
+    caption: "Archived promotional artwork for the Google Play release"
+    showInCards: false
+  - image: "projects/GameDevelopming/ToTheSky/StoreSkins.webp"
+    alt: "Archived store artwork presenting skins and colour customisation"
+    caption: "Archived store artwork presenting skins and colour customisation"
+    showInCards: false
+  - image: "projects/GameDevelopming/ToTheSky/StoreGameplay_ENVer.webp"
+    alt: "Archived store illustration of the endless level; promotional artwork, not a raw gameplay screenshot"
+    caption: "Archived store illustration of the endless level; promotional artwork, not a raw gameplay screenshot"
+    showInCards: false
+  - image: "projects/GameDevelopming/ToTheSky/Sequel_3D_Modeling.webp"
+    alt: "A cropped frame from the 2023 sequel modelling archive"
+    caption: "A cropped frame from the 2023 sequel modelling archive"
+    showInCards: false
+  - image: "projects/GameDevelopming/ToTheSky/Sequel_2D_Menu.webp"
+    alt: "The 2024 sequel: redesigned 2D menu"
+    caption: "The 2024 sequel: redesigned 2D menu"
+    showInCards: true
+---
+
+## The first Unity game I released
+
+ToTheSky was my first Unity project and my first game for a phone. I spent roughly three to four months learning the engine and C#, drawing textures, and building the game with documentation and tutorials. It reached Google Play on 20 February 2022. The listing is no longer available.
+
+The idea is a star trying to return to the sky. The player steers horizontally, avoids clouds, and collects coins while the endless run gradually speeds up. The best score is saved between attempts.
+
+<Image index={1} group open />
+
+## Three lives in a moving sky
+
+The settings offered two control schemes: following a finger or using the left and right halves of the screen as buttons. A cloud collision removes one of three lives. Leaving the screen also costs a life and returns the star to the centre.
+
+The star, camera, and background stay in place; obstacles and collectables travel downwards. I created objects with Instantiate and removed them with Destroy behind the camera. Clouds appeared either at the star’s current horizontal position or randomly, leaving space to move aside.
+
+Difficulty rises through an overall increase in speed. The bonus box temporarily accelerates time, making clouds, coins, and the rest of the gameplay move faster.
+
+<Image index={2} group open />
+
+## Coins, skins, and a different-looking star
+
+Collected coins could be spent on star skins with their own appearance and particles. The shop and its colour controls gave the small endless game a layer of personalisation beyond the current run.
+
+<Gallery indices={[3, 4]} group open />
+
+## Learning C# through a complete small game
+
+After Blueprint, C# felt unfamiliar. Saving progress, managing skins, keeping counters, and setting up random spawning and increasing difficulty were all new tasks. The interface was the part I found easiest; the rest had to be learned as I went.
+
+The Unlock Secret screen rewarded players for entering special codes I issued. Each code granted a set number of coins. The surviving editor screenshot records work on the reward animation.
+
+<Image index={5} group open />
+
+## The release as it was presented in the store
+
+These are the surviving promotional images prepared for Google Play: the star, the skin shop, and the endless level. They preserve the presentation of the released first game; the gameplay frames elsewhere on this page come from the old video recording.
+
+<Gallery indices={[6, 7, 8]} group open />
+
+## 2023 · a sequel explored in 3D
+
+In October 2023 I returned to the idea with more experience and started reworking it in 3D. The old short video combines footage of the first game with modelling for this new attempt. That version was stopped in 2023.
+
+I wanted to rewrite the systems so they would be easier to extend, improve the presentation, and add more skins, mechanics, levels, and modes instead of relying on one endless run. These were goals for the sequel, rather than features of a completed release.
+
+<Image index={9} group open />
+
+## 2024 · a new 2D interface
+
+I returned again in 2024, starting the sequel over in 2D. I redrew the interface and worked on its animations. In a later revision, Play opened a menu for selecting a mode and its level. The menu flow worked, but the actual gameplay was not completed.
+
+The cloud shader was used in the menu and configured further in the game scene. Its separate page shows the effect and its controls. Together, the two games mark my first finished mobile release and a later attempt to apply what I had learned to its visuals and structure.
+
+<Image index={10} group open />
+
+<nav className="case-contents" aria-label="Related work from ToTheSky">
+  <a href="../../shaders/tothesky2/tothesky2-noiseclouds/">Explore the cloud shader</a>
+</nav>
