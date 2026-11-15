@@ -49,8 +49,11 @@ const referenceTargets = Object.fromEntries([
 		<PageMetadata title={title} description={description} lang={lang} type={type} publishedAt={publishedAt} noindex={noindex} image={image} />
 
 		<link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
-		<link rel="icon" type="image/svg+xml" href={`${baseUrl}favicon.svg`} />
-		<link rel="icon" href={`${baseUrl}favicon.ico`} />
+		<link rel="icon" type="image/png" sizes="32x32" href={`${baseUrl}favicon-32.png`} />
+		<link rel="icon" type="image/png" sizes="192x192" href={`${baseUrl}icon-192.png`} />
+		<link rel="apple-touch-icon" href={`${baseUrl}apple-touch-icon.png`} />
+		<meta name="theme-color" content="#0f0f0e" />
+		<link rel="icon" href={`${baseUrl}favicon.ico`} sizes="any" />
 
 		<title>{title}</title>
 	</head>
