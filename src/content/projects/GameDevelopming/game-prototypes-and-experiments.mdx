@@ -1,0 +1,178 @@
+---
+title: "Game Prototypes & Experiments"
+summary: "Ten small projects exploring procedural worlds, first-person animation, 2D lighting, interfaces, and item systems. Selected work from unfinished games and technical studies."
+direction: "game-development"
+date: 2020-08-01
+dateApproximate: true
+dateEnd: 2026-09-23
+mediaLayout: "inline"
+featured: false
+tags: ["Prototypes", "Unity", "Unreal Engine", "Procedural Generation"]
+cover: "projects/GameDevelopming/SmallPrototypes/BitPixel_StickA.webp"
+gallery:
+  - image: "projects/GameDevelopming/SmallPrototypes/TrashToCash_Items.webp"
+    alt: "TrashToCash: an early item-interaction test"
+    caption: "TrashToCash: an early item-interaction test"
+    showInCards: false
+  - image: "projects/GameDevelopming/SmallPrototypes/TrashToCash_Containers.webp"
+    alt: "TrashToCash: prototype objects and containers"
+    caption: "TrashToCash: prototype objects and containers"
+    showInCards: false
+  - image: "projects/GameDevelopming/SmallPrototypes/Driving_Test.webp"
+    alt: "Driving prototype with a ready-made vehicle model and controller"
+    caption: "Driving prototype with a ready-made vehicle model and controller"
+    showInCards: true
+  - image: "projects/GameDevelopming/SmallPrototypes/Driving_Forest.webp"
+    alt: "A forest section in the driving prototype"
+    caption: "A forest section in the driving prototype"
+    showInCards: false
+  - image: "projects/GameDevelopming/SmallPrototypes/Shooter_Weapon.webp"
+    alt: "Weapon handling in the Unreal Engine shooting test"
+    caption: "Weapon handling in the Unreal Engine shooting test"
+    showInCards: true
+  - image: "projects/GameDevelopming/SmallPrototypes/Shooter_Test.webp"
+    alt: "An early first-person test scene"
+    caption: "An early first-person test scene"
+    showInCards: false
+  - image: "projects/GameDevelopming/SmallPrototypes/Shooter_PhotoMaterial.webp"
+    alt: "Testing a material made from photographs of an abandoned building"
+    caption: "Testing a material made from photographs of an abandoned building"
+    showInCards: false
+  - image: "projects/GameDevelopming/SmallPrototypes/BitPixel_StickA.webp"
+    alt: "BitPixel: a pixel-art stick generated entirely by a shader"
+    caption: "BitPixel: a pixel-art stick generated entirely by a shader"
+    showInCards: true
+  - image: "projects/GameDevelopming/SmallPrototypes/BitPixel_StickB.webp"
+    alt: "BitPixel: another variation of the procedural stick"
+    caption: "BitPixel: another variation of the procedural stick"
+    showInCards: false
+  - image: "projects/GameDevelopming/SmallPrototypes/BitPixel_World.webp"
+    alt: "BitPixel: the world-generation and movement test"
+    caption: "BitPixel: the world-generation and movement test"
+    showInCards: false
+  - image: "projects/GameDevelopming/SmallPrototypes/Butterfly_Lighting.webp"
+    alt: "Butterfly: hand-drawn sprites and a 2D lighting test"
+    caption: "Butterfly: hand-drawn sprites and a 2D lighting test"
+    showInCards: false
+  - image: "projects/GameDevelopming/SmallPrototypes/Terraria_Terrain.webp"
+    alt: "The 2.5D block-world prototype: layered terrain"
+    caption: "The 2.5D block-world prototype: layered terrain"
+    showInCards: false
+  - image: "projects/GameDevelopming/SmallPrototypes/Terraria_Inventory.webp"
+    alt: "The 2.5D prototype: inventory and collected block stacks"
+    caption: "The 2.5D prototype: inventory and collected block stacks"
+    showInCards: true
+  - image: "projects/GameDevelopming/SmallPrototypes/Dungeons_Character.webp"
+    alt: "Dungeons: character animation and mobile controls"
+    caption: "Dungeons: character animation and mobile controls"
+    showInCards: false
+  - image: "projects/GameDevelopming/SmallPrototypes/Dungeons_Room.webp"
+    alt: "Dungeons: a test room and staff-switching interface"
+    caption: "Dungeons: a test room and staff-switching interface"
+    showInCards: false
+  - image: "projects/GameDevelopming/SmallPrototypes/Sweather_World.webp"
+    alt: "Sweather: world and movement test using external textures"
+    caption: "Sweather: world and movement test using external textures"
+    showInCards: true
+  - image: "projects/GameDevelopming/SmallPrototypes/TicTacToe_MenuA.webp"
+    alt: "Tic-Tac-Toe: an early pencil-style menu mock-up"
+    caption: "Tic-Tac-Toe: an early pencil-style menu mock-up"
+    showInCards: false
+  - image: "projects/GameDevelopming/SmallPrototypes/TicTacToe_MenuB.webp"
+    alt: "Tic-Tac-Toe: menu layout with controls"
+    caption: "Tic-Tac-Toe: menu layout with controls"
+    showInCards: false
+  - image: "projects/GameDevelopming/SmallPrototypes/TicTacToe_Design.webp"
+    alt: "Tic-Tac-Toe: interface artwork in Photoshop"
+    caption: "Tic-Tac-Toe: interface artwork in Photoshop"
+    showInCards: false
+  - image: "projects/GameDevelopming/SmallPrototypes/CubeNoise_Test.webp"
+    alt: "An independent block-based noise-generation experiment"
+    caption: "An independent block-based noise-generation experiment"
+    showInCards: false
+---
+
+These are selected unfinished games and technical experiments from different stages of my development. Each section distinguishes the systems that worked from ideas that remained unimplemented.
+
+<nav class="project-section-nav" aria-label="Prototype sections"><a href="#trashtocash--item-systems">TrashToCash</a><a href="#driving-prototype--chunks-ahead-of-the-car">Driving</a><a href="#3d-shooter--animation-and-photo-textures">3D Shooter</a><a href="#bitpixel--a-procedural-pixel-art-stick">BitPixel</a><a href="#butterfly--volume-through-2d-light">Butterfly</a><a href="#25d-block-world--mining-and-inventory">2.5D</a><a href="#dungeons--magic-sticks--mobile-movement">Dungeons</a><a href="#sweather--a-small-survival-prototype">Sweather</a><a href="#tic-tac-toe--a-pencil-style-interface">Tic-Tac-Toe</a><a href="#cube-noise--a-generation-experiment">Cube Noise</a></nav>
+
+## TrashToCash · Item systems
+
+An unfinished recycling-game prototype from 2026. I wrote item factories, storage logic, and foundations for saving. The working interactions covered dismantling objects into materials, collecting them in containers, and selling them. The complete save-and-load system was not finished.
+
+I focused on readable, structured code that could support more content. The footage from the September development post shows a primitive-based test scene; the textured low-poly assets are presented separately on the modelling page.
+
+<Gallery indices={[1, 2]} group open />
+
+<nav class="project-section-nav" aria-label="Related models"><a href="../../3dmodeling/trashtocash-models/">TrashToCash models</a></nav>
+
+## Driving prototype · Chunks ahead of the car
+
+In August 2020, I made an Unreal Engine free-driving prototype. The vehicle controller was ready-made; I connected it to the controls and interface, then assembled and scripted environment chunks from assets. The player controlled acceleration, without points or rewards.
+
+Triggers started the creation of chunks ahead of the car, extending the route during the drive. Chunks left behind were removed when they became sufficiently distant from the player. This generation system was my main contribution to the prototype.
+
+<Gallery indices={[3, 4]} group open />
+
+## 3D Shooter · Animation and photo textures
+
+An unreleased Unreal Engine shooter built with ready-made weapon models and my own Blueprint logic. I animated firing, reloading, weapon switching, camera movement, and drawing and holding a phone with a music player. In an unreleased version, enemies could pursue the player through NavMesh, shoot, take damage, and die.
+
+I also experimented with materials made from my photographs of an abandoned building. I corrected the colours, cleaned up details, and adjusted the images to the required resolution before applying them to simple box-shaped geometry.
+
+<Gallery indices={[5, 6, 7]} group open />
+
+## BitPixel · A procedural pixel-art stick
+
+The most distinctive experiment in BitPixel was a stick drawn entirely by a shader. Resolution, seed, and colouring could be changed to produce different pixel-art versions of the same kind of object. I wanted the generated shapes to retain a hand-drawn appearance.
+
+The prototype also had an endless 2D world, character movement, and early attempts at generating trees. It was an early exercise in more structured object-oriented code. Drawing a custom character and crafting with collected pixels remained ideas.
+
+<Gallery indices={[8, 9, 10]} group open />
+
+## Butterfly · Volume through 2D light
+
+A December 2021 Unity prototype about a butterfly. The implemented behaviour was flying and landing when idle. I drew the textures and normal maps by hand and used URP 2D lighting to give flat sprites a sense of volume through the butterfly’s light and the lights in the scene.
+
+The broader idea was a vulnerable butterfly travelling through dangerous dungeons, inspired by games such as Soul Knight. Procedural rooms did not reach a working implementation; the surviving scene records the visual and movement experiments.
+
+<Image index={11} group open />
+
+## 2.5D block world · Mining and inventory
+
+An Unreal Engine experiment inspired by Terraria: a noise-generated block world, several terrain layers, block destruction, and particles. I drew the textures myself. The prototype explored these systems on a much smaller scale than my later IsLands project.
+
+The inventory supported picking up blocks, storing and stacking them, and moving them between cells. Placing blocks back into the world from the inventory was not implemented.
+
+<Gallery indices={[12, 13]} group open />
+
+## Dungeons / Magic Sticks · Mobile movement
+
+A mobile dungeon-game prototype with my own drawings. I implemented joystick movement, a test room, a weapon-switch button, character animations, and character stats. The visual effects in the recordings are particles around the character or staff, not working shots.
+
+The intended game revolved around collecting staffs with different properties. Shooting, damage effects, and dungeon generation were not implemented. The surviving work is a study of character presentation, controls, and switching staffs.
+
+<Gallery indices={[14, 15]} group open />
+
+## Sweather · A small survival prototype
+
+A less procedural survival-game experiment with world generation, character movement, and character animations. Unlike BitPixel’s custom procedural graphics, this prototype used external textures.
+
+The top item panel was only an inventory interface. Picking up, storing, or using items through it had not been implemented.
+
+<Image index={16} group open />
+
+## Tic-Tac-Toe · A pencil-style interface
+
+An unfinished tic-tac-toe project with a pencil-drawn visual style. The computer opponent initially chose moves almost randomly; I later added precomputed responses to specific board situations as an interim solution. This was a rule-based opponent, not a learning system.
+
+Facebook multiplayer was explored but not completed. The surviving images document the menu design and interface work in Photoshop, rather than a demonstration of online play.
+
+<Gallery indices={[17, 18, 19]} group open />
+
+## Cube Noise · A generation experiment
+
+A separate Unreal Engine test of generating a block-based world from noise. It remained a small technical experiment rather than developing into a full game.
+
+<Image index={20} group open />
+
