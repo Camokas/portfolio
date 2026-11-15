@@ -94,6 +94,7 @@ const otherAudio = musicTrack ? project.data.audio.slice(1) : project.data.audio
 					</div>
 					{project.data.cover && !musicTrack && (
 						<figure class="key-preview">
+							<Doodle name="corner-2" width={24} class="kc tl" /><Doodle name="corner-2" width={24} class="kc br" />
 							<Image src={project.data.cover} alt="" widths={[640, 1000, 1400]} sizes="(min-width: 56rem) 60vw, 100vw" loading="eager" />
 						</figure>
 					)}
@@ -217,7 +218,11 @@ const otherAudio = musicTrack ? project.data.audio.slice(1) : project.data.audio
 	.facts :global(.date-range) { border: 0; padding: 0; background: none; }
 	.demo-label { padding: 0.2rem 0.6rem; border-radius: var(--radius-sm); background: var(--color-accent); color: var(--color-background); font-size: var(--text-label); font-weight: 700; }
 	.key-preview { margin: 0; overflow: hidden; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); box-shadow: var(--glow); }
-	.key-preview :global(img) { display: block; width: 100%; height: auto; max-height: 32rem; object-fit: cover; }
+	.key-preview :global(img:not(.doodle)) { display: block; width: 100%; height: auto; max-height: 32rem; object-fit: cover; }
+	.key-preview { position: relative; }
+	.key-preview :global(.kc) { z-index: 1; opacity: 0.8; width: 1.6rem; height: auto; }
+	.key-preview :global(.tl) { left: 0.5rem; top: 0.5rem; }
+	.key-preview :global(.br) { right: 0.5rem; bottom: 0.5rem; transform: rotate(180deg); }
 	.project-header :global(.mark) { opacity: 0.55; }
 	.the-end { display: grid; justify-items: end; gap: var(--space-1); max-width: 70rem; margin: var(--space-6) auto 0; }
 	.the-end :global(.doodle) { opacity: 0.45; }

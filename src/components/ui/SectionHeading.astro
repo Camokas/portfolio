@@ -16,9 +16,11 @@ interface Props {
 	/** Small hand-drawn mark next to the title. */
 	accent?: DoodleName;
 	accentWidth?: number;
+	/** Hand-drawn arrow before the link. */
+	linkAccent?: DoodleName;
 }
 
-const { id, index, title, note, href, linkLabel, level = 2, accent, accentWidth = 44 } = Astro.props;
+const { id, index, title, note, href, linkLabel, level = 2, accent, accentWidth = 44, linkAccent } = Astro.props;
 const Tag = level === 1 ? "h1" : "h2";
 ---
 
@@ -29,7 +31,7 @@ const Tag = level === 1 ? "h1" : "h2";
 		{note && <p class="note">{note}</p>}
 	</div>
 	<slot />
-	{href && linkLabel && <a class="link-arrow" href={href}>{linkLabel} <Icon name="arrow-right" size={16} /></a>}
+	{href && linkLabel && <div class="link-wrap">{linkAccent && <Doodle name={linkAccent} width={52} flow class="link-accent" />}<a class="link-arrow" href={href}>{linkLabel} <Icon name="arrow-right" size={16} /></a></div>}
 </div>
 
 <style>
@@ -43,6 +45,9 @@ const Tag = level === 1 ? "h1" : "h2";
 	}
 	.title-row { display: flex; align-items: center; gap: var(--space-4); }
 	.title-row :global(.accent) { opacity: 0.7; flex: none; }
+	.link-wrap { display: flex; align-items: center; gap: var(--space-3); }
+	.link-wrap :global(.link-accent) { opacity: 0.55; }
+	@media (max-width: 36rem) { .link-wrap :global(.link-accent) { display: none; } }
 	.text { display: grid; gap: var(--space-1); min-width: 0; }
 	h1, h2 { margin: 0; font-size: var(--text-h2); line-height: 1.15; letter-spacing: -0.03em; }
 	h1 { font-size: var(--text-h1); letter-spacing: -0.04em; }

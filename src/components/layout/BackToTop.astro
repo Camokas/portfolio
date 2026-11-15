@@ -1,9 +1,9 @@
 ---
-import Icon from "../ui/Icon.astro";
+import Doodle from "../ui/Doodle.astro";
 ---
 <button class="back-to-top" type="button" aria-label="Back to top" title="Back to top"
 	aria-hidden="true" tabindex="-1" data-visible="false">
-	<Icon name="arrow-left" size={18} />
+	<Doodle name="arrow-up" width={11} flow class="up" />
 	<span>Back to top</span>
 </button>
 
@@ -39,7 +39,7 @@ import Icon from "../ui/Icon.astro";
 	transform:translateY(8px);transition:opacity 220ms ease,transform 220ms ease,visibility 220ms,border-color 180ms ease;
 }
 .back-to-top[data-visible="true"]{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
-.back-to-top :global(svg){transform:rotate(90deg)}
+.back-to-top :global(.up){opacity:.95;height:1.2rem;width:auto}
 .back-to-top:hover{border-color:var(--color-accent)}
 .back-to-top:focus-visible{outline:2px solid var(--color-accent);outline-offset:4px}
 @media(max-width:32rem){.back-to-top{padding:.85rem}.back-to-top span{display:none}}

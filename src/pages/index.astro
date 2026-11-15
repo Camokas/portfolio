@@ -27,6 +27,7 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 <BaseLayout title={home.pageTitle} description={home.pageDescription} lang="en">
 	<main id="main-content" tabindex="-1">
 		<section class="hero container" aria-labelledby="hero-title">
+			<Doodle name="dots" width={70} class="dots" />
 			<div class="hero-copy">
 				<p class="label">~/{home.eyebrow}<span class="cursor" aria-hidden="true">_</span></p>
 				<h1 id="hero-title">{home.name}</h1>
@@ -35,6 +36,7 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 				<div class="actions">
 					<a class="btn btn-primary" href="#featured"><Icon name="arrow-right" size={17} />{home.viewWork}</a>
 					<a class="btn" href="#contact"><Icon name="mail" size={17} />{home.getInTouch}</a>
+					<Doodle name="cursor" width={40} class="cursor-hint" />
 				</div>
 			</div>
 
@@ -44,13 +46,12 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 					<Doodle name="author" width={260} flow eager class="author" />
 					<Doodle name="stars" width={96} class="stars" />
 				</div>
-				<Doodle name="hi" width={74} class="hi" />
 				<figcaption class="label">fig. 1 — {home.heroArtCaption}</figcaption>
 			</figure>
 		</section>
 
 		<section id="featured" class="featured container" aria-labelledby="featured-title">
-			<SectionHeading id="featured-title" accent="star-sketch" accentWidth={46} index="01" title={home.featuredTitle} href={`${baseUrl}projects/`} linkLabel={home.allProjects} />
+			<SectionHeading id="featured-title" accent="star-sketch" accentWidth={46} index="01" title={home.featuredTitle} href={`${baseUrl}projects/`} linkLabel={home.allProjects} linkAccent="arrow-right" />
 			<ul class="featured-grid">
 				{featured.map((project, index) => <ProjectCard project={project} variant={index === 0 ? "feature" : "default"} />)}
 			</ul>
@@ -66,6 +67,7 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 		</section>
 
 		<section class="about container" aria-labelledby="about-title">
+			<Doodle name="spiral-1" width={88} class="spiral" />
 			<div class="about-grid">
 				<div>
 					<p class="label" aria-hidden="true">03</p>
@@ -140,6 +142,7 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 		gap: var(--space-6);
 		padding-block: clamp(2.5rem, 7vw, 5.5rem) var(--space-7);
 	}
+	.hero { position: relative; }
 	.hero-copy { display: grid; min-width: 0; justify-items: start; gap: var(--space-3); }
 	.cursor { margin-left: 0.15em; animation: blink 1.1s steps(2, start) infinite; }
 	h1 {
@@ -173,7 +176,10 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 	.frame :global(.tr) { right: 0.4rem; top: 0.4rem; transform: rotate(90deg); }
 	.frame :global(.br) { right: 0.4rem; bottom: 0.4rem; transform: rotate(180deg); }
 	.frame :global(.bl) { left: 0.4rem; bottom: 0.4rem; transform: rotate(270deg); }
-	.hero-art :global(.hi) { left: -3.6rem; top: 0.5rem; opacity: 0.8; transform: rotate(-6deg); }
+	.actions { position: relative; }
+	.actions :global(.cursor-hint) { left: 16.2rem; top: 2.5rem; opacity: 0.7; transform: rotate(-8deg); }
+	.hero :global(.dots) { left: -1.5rem; bottom: 1.2rem; opacity: 0.35; }
+	.about :global(.spiral) { right: 0; top: 0.5rem; opacity: 0.4; }
 	.contact-art :global(.pointer) { opacity: 0.55; margin-bottom: -0.25rem; }
 
 	/* ---------- Sections ---------- */
@@ -188,7 +194,7 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 	.tile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
 	/* ---------- About ---------- */
-	.about { padding-block: var(--space-6); }
+	.about { position: relative; padding-block: var(--space-6); }
 	.about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--space-6); padding-top: var(--space-6); border-top: 1px solid var(--color-border); }
 	h2 { margin: var(--space-1) 0 0; font-size: var(--text-h2); line-height: 1.15; letter-spacing: -0.03em; }
 	.about-text .lead { margin: 0; color: var(--color-text); max-width: var(--measure); }
@@ -230,8 +236,8 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 		.tile-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 	}
 	@media (max-width: 56rem) {
-		.hero-art :global(.hi) { left: -1rem; top: -1.4rem; }
 		.contact-box { grid-template-columns: 1fr; }
+		.about :global(.spiral) { display: none; }
 		.contact-art { grid-auto-flow: column; justify-content: start; align-items: end; }
 		.about-grid { grid-template-columns: 1fr; gap: var(--space-3); }
 	}
@@ -246,7 +252,7 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 		.frame :global(.author) { width: 4.6rem; }
 		.frame :global(.stars) { width: 1.9rem; right: 0.3rem; top: 0.3rem; }
 		.frame :global(.corner) { display: none; }
-		.hero-art :global(.hi) { display: none; }
+		.actions :global(.cursor-hint), .hero :global(.dots) { display: none; }
 		h1 { font-size: clamp(3rem, 16vw, 4.25rem); }
 	}
 	@media (prefers-reduced-motion: reduce) {
