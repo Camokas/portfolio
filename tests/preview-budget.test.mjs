@@ -3,11 +3,11 @@ import assert from "node:assert/strict";
 import { createPreviewBudget, heavyLimit } from "../src/scripts/previewBudget.mjs";
 
 test("heavy limit is conservative on touch, weak CPUs and reduced motion", () => {
-	assert.equal(heavyLimit({ cores: 8 }), 2);
-	assert.equal(heavyLimit({ cores: 4 }), 1);
-	assert.equal(heavyLimit({ coarsePointer: true, cores: 12 }), 1);
-	assert.equal(heavyLimit({ reducedMotion: true }), 0);
-	assert.equal(heavyLimit({ saveData: true }), 0);
+	assert.equal(heavyLimit({ cores: 8 }), 4);
+	assert.equal(heavyLimit({ cores: 4 }), 2);
+	assert.equal(heavyLimit({ coarsePointer: true, cores: 12 }), 2);
+	assert.equal(heavyLimit({ reducedMotion: true }), 1);
+	assert.equal(heavyLimit({ saveData: true }), 1);
 });
 
 test("budget never grants more slots than the limit", () => {

@@ -18,8 +18,6 @@ const refreshBudgetLimit = () => budget.setLimit(heavyLimit({
 refreshBudgetLimit();
 reducedMotion.addEventListener("change", refreshBudgetLimit);
 coarsePointer.addEventListener("change", refreshBudgetLimit);
-// При экономии трафика или reduced motion карточки остаются статичными.
-const staticMode = () => reducedMotion.matches || saveData;
 
 class MediaPreview extends HTMLElement {
 	items: PreviewMedia[] = [];
@@ -78,12 +76,12 @@ class MediaPreview extends HTMLElement {
 			this.prepared.set(0, initial); this.index = 0;
 			this.shownInCycle.add(0);
 		}
-		// Animate only cards that are clearly on screen.
+		// Animate cards that are meaningfully on screen.
 		this.observer = new IntersectionObserver((entries) => {
 			const entry = entries[entries.length - 1];
-			this.visible = entry.isIntersecting && entry.intersectionRatio >= 0.35;
+			this.visible = entry.isIntersecting && entry.intersectionRatio >= 0.2;
 			this.sync();
-		}, { threshold: [0, 0.35] });
+		}, { threshold: [0, 0.2] });
 		this.observer.observe(this);
 		// Pointer or keyboard focus gives this card priority for a heavy slot.
 		const card = this.closest("li") ?? this.parentElement;
@@ -103,7 +101,7 @@ class MediaPreview extends HTMLElement {
 		this.updateVideo();
 		if (!this.running) { this.stopTimer(); return; }
 		this.preload();
-		if (this.items.length > 1 && this.timer === undefined && !staticMode()) {
+		if (this.items.length > 1 && this.timer === undefined) {
 			this.deadline = performance.now() + this.nextDelay;
 			this.timer = setTimeout(() => {
 				this.timer = undefined;

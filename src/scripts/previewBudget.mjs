@@ -3,8 +3,8 @@
 // slides may run at once across the whole page. No new media files are needed.
 
 export function heavyLimit({ reducedMotion = false, saveData = false, coarsePointer = false, cores = 8 } = {}) {
-	if (reducedMotion || saveData) return 0;
-	return coarsePointer || cores <= 4 ? 1 : 2;
+	if (reducedMotion || saveData) return 1;
+	return coarsePointer || cores <= 4 ? 2 : 4;
 }
 
 export function createPreviewBudget(limit) {
