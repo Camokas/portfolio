@@ -35,14 +35,17 @@ class MediaPreview extends HTMLElement {
 	pending = new Set<number>();
 	hot = false;
 	get running() { return this.visible && !document.hidden && this.isConnected; }
-	isHeavy(index: number) { const kind = this.items[index]?.kind; return kind === "video" || kind === "model"; }
-	heavyInUse() { return [...this.prepared.keys(), ...this.pending].some(index => this.isHeavy(index)); }
+	// Only video must wait for a budget slot to be prepared. A 3D preview is always drawn once (cheap and static);
+	// a slot is needed only to keep it spinning, and never when the user prefers reduced motion.
+	isHeavy(index: number) { return this.items[index]?.kind === "video"; }
+	isSlotted(index: number) { const kind = this.items[index]?.kind; return kind === "video" || (kind === "model" && !reducedMotion.matches); }
+	heavyInUse() { return [...this.prepared.keys(), ...this.pending].some(index => this.isSlotted(index)); }
 	canUseHeavy() { return budget.tryAcquire(this, { priority: this.hot }); }
 	refreshBudget() { if (!this.heavyInUse()) budget.release(this); }
 	// Called by the budget when a hovered/focused card takes this card's slot.
 	yieldHeavy() {
 		this.prepared.forEach((element, index) => {
-			if (!this.isHeavy(index)) return;
+			if (!this.isSlotted(index)) return;
 			modelModule?.updateModelPreview(element, false);
 			if (element instanceof HTMLVideoElement) element.pause();
 		});
@@ -123,7 +126,7 @@ class MediaPreview extends HTMLElement {
 		// An offscreen card gives its heavy slot back; it is taken again when visible.
 		if (!this.running) budget.release(this);
 		this.prepared.forEach((element, index) => {
-			const play = this.running && index === this.index && (!this.isHeavy(index) || this.canUseHeavy());
+			const play = this.running && index === this.index && (!this.isSlotted(index) || this.canUseHeavy());
 			modelModule?.updateModelPreview(element, play);
 			if (!(element instanceof HTMLVideoElement)) return;
 			if (play) void element.play().catch(() => {});

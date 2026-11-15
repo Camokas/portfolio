@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { createGltfLoader, createWebGL2Context } from "./gltfLoader";
 import { previewDistance } from "./modelPreviewFraming.mjs";
 
 // One GPU context for every card. Only visible, selected slides animate.
@@ -52,7 +52,7 @@ async function load(src: string): Promise<Resource> {
     let timeout: ReturnType<typeof setTimeout> | undefined;
     try {
       const root = src ? await Promise.race([
-        new GLTFLoader().loadAsync(src).then(gltf => { if (expired) dispose(gltf.scene); return gltf.scene; }),
+        createGltfLoader().loadAsync(src).then(gltf => { if (expired) dispose(gltf.scene); return gltf.scene; }),
         new Promise<never>((_, reject) => { timeout = setTimeout(() => { expired = true; reject(new Error("Model preview timed out")); }, 20000); }),
       ]) : new THREE.Group().add(new THREE.Mesh(new THREE.IcosahedronGeometry(1.25, 2), new THREE.MeshStandardMaterial({color: 0xe8e8e8})));
       root.traverse(node => { if (node instanceof THREE.Mesh && !node.geometry.attributes.normal) node.geometry.computeVertexNormals(); });
@@ -72,7 +72,10 @@ async function load(src: string): Promise<Resource> {
 }
 function gpu() {
   if (!renderer) {
-    renderer = new THREE.WebGLRenderer({alpha: true, antialias: false, powerPreference: "low-power"});
+    const canvas = document.createElement("canvas");
+    const context = createWebGL2Context(canvas, {alpha: true, antialias: false, powerPreference: "low-power", preserveDrawingBuffer: true});
+    if (!context) throw new Error("WebGL 2 is unavailable");
+    renderer = new THREE.WebGLRenderer({canvas, context, alpha: true});
     renderer.setPixelRatio(1); renderer.setClearColor(0x000000, 0);
     renderer.domElement.addEventListener("webglcontextlost", event => { event.preventDefault(); if (frame) cancelAnimationFrame(frame); frame = 0; });
     renderer.domElement.addEventListener("webglcontextrestored", schedule);

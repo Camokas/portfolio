@@ -25,7 +25,8 @@ const initialImage = first?.kind === "image" || first?.kind === "shaderGraph" ? 
 </script>
 
 <style>
-	media-preview { position: absolute; inset: 0; display: block; overflow: hidden; pointer-events: none; }
+	/* If a preview cannot be produced (no WebGL, blocked media), the tile still looks intentional. */
+	media-preview { position: absolute; inset: 0; display: block; overflow: hidden; pointer-events: none; background: radial-gradient(circle at 1px 1px, rgb(244 241 232 / 0.12) 1px, transparent 1.5px) 0 0 / 14px 14px, #1f1f1d; }
 	.preview-layers { position: absolute; inset: 0; }
 	media-preview :global(.slide) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; }
 	media-preview :global(.slide.active) { opacity: 1; }
