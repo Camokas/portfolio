@@ -40,7 +40,6 @@ const featuredProjects = home.featuredProjects.map((id) => {
 				<a class="button primary" href="#featured"><Icon name="arrow-right" size={17} />{home.viewWork}</a>
 				<a class="button" href="#contact"><Icon name="mail" size={17} />{home.getInTouch}</a>
 			</div>
-			<p class="hero-status">{home.heroStatus}</p>
 			<Doodle name="author" width={720} height={1027} />
 			<Doodle name="stars" width={400} height={460} />
 		</section>
@@ -303,13 +302,6 @@ const featuredProjects = home.featuredProjects.map((id) => {
 	.button.primary:focus-visible {
 		background: transparent;
 		color: var(--color-text);
-	}
-
-	.hero-status {
-		margin: 1.25rem 0 0;
-		color: var(--color-muted);
-		font-size: 0.9rem;
-		line-height: 1.5;
 	}
 
 	.featured {
