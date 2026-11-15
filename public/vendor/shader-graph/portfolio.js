@@ -54,6 +54,66 @@ document.addEventListener("DOMContentLoaded", async () => {
     panner.updateTransform();
   }
   document.getElementById("fit").addEventListener("click", fitGraph);
+  // Touch: one finger pans, two fingers pinch-zoom around their midpoint (the upstream viewer only knows the mouse).
+  const surface = document.getElementById("canvas");
+  const touches = new Map();
+  let gesture = null;
+  const panner = window.PannerDragger;
+  const clampScale = value => Math.max(panner.minScaleFactor, Math.min(panner.maxScaleFactor, value));
+  const beginGesture = () => {
+    const list = [...touches.values()];
+    panner.originX = panner.originY = panner.translateOriginX = panner.translateOriginY = 0;
+    if (list.length === 1) gesture = { mode: "pan", x: list[0].x, y: list[0].y, tx: panner.translateX, ty: panner.translateY };
+    else if (list.length >= 2) {
+      const [a, b] = list;
+      const left = container.offsetLeft, top = container.offsetTop;
+      const midX = (a.x + b.x) / 2, midY = (a.y + b.y) / 2;
+      gesture = { mode: "pinch", distance: Math.hypot(a.x - b.x, a.y - b.y) || 1, scale: panner.scaleFactor,
+        px: (midX - left) / panner.scaleFactor - panner.translateX, py: (midY - top) / panner.scaleFactor - panner.translateY };
+    } else gesture = null;
+  };
+  surface.addEventListener("pointerdown", event => {
+    if (event.pointerType === "mouse" || !panner.shaderLoaded || panner.isPresenting) return;
+    touches.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    try { surface.setPointerCapture(event.pointerId); } catch {}
+    beginGesture();
+  });
+  surface.addEventListener("pointermove", event => {
+    if (!touches.has(event.pointerId) || !gesture) return;
+    touches.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (gesture.mode === "pan") {
+      panner.translateX = gesture.tx + (event.clientX - gesture.x) / panner.scaleFactor;
+      panner.translateY = gesture.ty + (event.clientY - gesture.y) / panner.scaleFactor;
+    } else {
+      const [a, b] = [...touches.values()];
+      const next = clampScale(gesture.scale * (Math.hypot(a.x - b.x, a.y - b.y) / gesture.distance));
+      const midX = (a.x + b.x) / 2, midY = (a.y + b.y) / 2;
+      panner.scaleFactor = next;
+      panner.translateX = (midX - container.offsetLeft) / next - gesture.px;
+      panner.translateY = (midY - container.offsetTop) / next - gesture.py;
+      panner.zoomElement.style.display = "block";
+      panner.zoomElement.textContent = `Zoom: ${Math.round(next * 100)}%`;
+    }
+    panner.lastTranslateX = panner.translateX;
+    panner.lastTranslateY = panner.translateY;
+    panner.updateTransform();
+  });
+  const endTouch = event => { if (touches.delete(event.pointerId)) beginGesture(); };
+  surface.addEventListener("pointerup", endTouch);
+  surface.addEventListener("pointercancel", endTouch);
+  // Narrow screens: short labels keep the toolbar on one row; hide fullscreen where the browser cannot do it (iOS iframes).
+  if (matchMedia("(max-width: 650px)").matches) {
+    for (const [id, label] of [["fit", "Fit"], ["blackboard", "Props"], ["graph-inspector", "Inspect"], ["fullscreen", "Full"]]) {
+      const button = document.getElementById(id);
+      if (button) button.textContent = label;
+    }
+  }
+  if (!document.fullscreenEnabled && !document.webkitFullscreenEnabled) document.getElementById("fullscreen")?.setAttribute("hidden", "");
+  if (matchMedia("(hover: none)").matches) {
+    const hint = document.querySelector("body > footer span");
+    if (hint) hint.textContent = "Drag to pan · Pinch to zoom · Tap a node to inspect";
+  }
+
   try {
     const requested = new URLSearchParams(location.search).get("src");
     if (!requested) throw new Error("No shader graph file was selected.");

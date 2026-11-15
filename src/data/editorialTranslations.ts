@@ -382,4 +382,5 @@ export const editorialTranslations: Record<string, string> = {
   "Everything I work with, from the busiest areas to the quiet ones.": "Всё, с чем я работаю: от самых активных направлений до тихих.",
   "Directions | Camoka's Portfolio": "Направления | Портфолио Camoka",
   "All creative directions in Camoka's portfolio: game development, 3D, video, motion, music, drawing, and more.": "Все творческие направления портфолио Camoka: разработка игр, 3D, видео, моушн, музыка, рисование и другое.",
+  "Drag to pan, pinch to zoom. Use Open viewer for a full-screen view.": "Перетаскивайте для сдвига, щипком меняйте масштаб. «Open viewer» открывает граф на весь экран.",
 };

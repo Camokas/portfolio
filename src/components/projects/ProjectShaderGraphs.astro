@@ -20,7 +20,8 @@ const viewerUrl = (src: string) => `${base}vendor/shader-graph/index.html?src=${
 					<a href={fileUrl(item.src)} download>Download graph</a>
 				</div>
 			</figcaption>
-			<shader-graph-viewer data-viewer-url={viewerUrl(item.src)}>
+			<p class="touch-hint">Drag to pan, pinch to zoom. Use Open viewer for a full-screen view.</p>
+				<shader-graph-viewer data-viewer-url={viewerUrl(item.src)}>
 				<iframe title={`Shader Graph: ${item.title}`} sandbox="allow-scripts allow-same-origin" allow="fullscreen" allowfullscreen referrerpolicy="no-referrer"></iframe>
 			</shader-graph-viewer>
 		</figure>)}
@@ -55,6 +56,9 @@ const viewerUrl = (src: string) => `${base}vendor/shader-graph/index.html?src=${
 	p { margin: 0.4rem 0 0; color: var(--color-muted); font-size: 0.85rem; }
 	.graph-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; font-size: 0.75rem; }
 	a { color: var(--color-text); text-underline-offset: 0.2rem; padding-block: 0.4rem; }
-	shader-graph-viewer { display: block; height: clamp(26rem, 65svh, 44rem); border: 1px solid var(--color-border); border-radius: 0.85rem; overflow: hidden; background: #141414; }
+	.touch-hint { display: none; margin: 0 0 0.6rem; font-family: var(--font-mono); font-size: var(--text-label); color: var(--color-faint); }
+	@media (hover: none) { .touch-hint { display: block; } }
+	shader-graph-viewer { touch-action: pan-y; display: block; height: clamp(26rem, 65svh, 44rem); border: 1px solid var(--color-border); border-radius: 0.85rem; overflow: hidden; background: #141414; }
+	@media (max-width: 36rem) { .graph-links a { min-height: 2.75rem; display: inline-flex; align-items: center; } shader-graph-viewer { height: clamp(22rem, 68svh, 40rem); } }
 	iframe { width: 100%; height: 100%; border: 0; display: block; }
 </style>
