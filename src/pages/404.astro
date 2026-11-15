@@ -1,0 +1,82 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/ui/Icon.astro";
+
+const baseUrl = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+	title="Page not found | Camoka's Portfolio"
+	description="This page does not exist. Return to the portfolio home page or browse all projects."
+	lang="en"
+	noindex
+>
+	<main class="not-found" id="main-content" tabindex="-1">
+		<p class="code">404</p>
+		<h1>Page not found</h1>
+		<p class="text">
+			The page may have been moved or the link is mistyped. Start from the home page or browse the projects.
+		</p>
+		<nav class="actions" aria-label="Recovery links">
+			<a href={baseUrl}><Icon name="house" size={16} />Home</a>
+			<a href={`${baseUrl}projects/`}><Icon name="layout-grid" size={16} />All projects</a>
+			<a href={`${baseUrl}#contact`}><Icon name="mail" size={16} />Contact</a>
+		</nav>
+	</main>
+</BaseLayout>
+
+<style>
+	.not-found {
+		display: grid;
+		flex: 1;
+		align-content: center;
+		justify-items: center;
+		width: min(calc(100% - 2rem), 40rem);
+		margin-inline: auto;
+		padding-block: clamp(3rem, 12vw, 8rem);
+		text-align: center;
+	}
+
+	.code {
+		margin: 0;
+		color: var(--color-muted);
+		font-size: clamp(4rem, 18vw, 8rem);
+		font-weight: 800;
+		line-height: 1;
+	}
+
+	h1 {
+		margin: 0.5rem 0 0;
+		font-size: clamp(1.75rem, 5vw, 2.5rem);
+	}
+
+	.text {
+		margin: 1rem 0 0;
+		color: var(--color-muted);
+		line-height: 1.6;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.75rem;
+		margin-top: 2rem;
+	}
+
+	.actions a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.65rem 1rem;
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		color: var(--color-text);
+		text-decoration: none;
+	}
+
+	.actions a:hover,
+	.actions a:focus-visible {
+		border-color: var(--color-text);
+	}
+</style>

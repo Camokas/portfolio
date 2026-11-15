@@ -354,5 +354,10 @@ export const editorialTranslations: Record<string, string> = {
   "I drew the IsLands icon in Photoshop: a small floating island with a house, a tree, and the game's name. It brings the game's world into a compact pixel-art composition.": "Иконку IsLands я нарисовал в Photoshop: маленький парящий остров с домом, деревом и названием игры. Мир игры собран в компактную пиксельную композицию.",
   "Winter version": "Зимний вариант",
   "The winter version keeps the same composition, with snow, a decorated tree, and a different palette.": "Зимний вариант сохраняет ту же композицию: добавлены снег, украшенное дерево и другая палитра.",
-  "Loading atlas…": "Загрузка атласа…"
+  "Loading atlas…": "Загрузка атласа…",
+  "Page not found": "Страница не найдена",
+  "Page not found | Camoka's Portfolio": "Страница не найдена | Портфолио Camoka",
+  "The page may have been moved or the link is mistyped. Start from the home page or browse the projects.": "Возможно, страница перемещена или в ссылке опечатка. Начните с главной страницы или посмотрите проекты.",
+  "This page does not exist. Return to the portfolio home page or browse all projects.": "Такой страницы нет. Вернитесь на главную страницу портфолио или посмотрите все проекты.",
+  "Recovery links": "Ссылки для возврата"
 };

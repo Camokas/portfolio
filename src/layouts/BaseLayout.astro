@@ -12,9 +12,10 @@ interface Props {
 	type?: "website" | "article";
 	publishedAt?: Date;
 	noindex?: boolean;
+	image?: string;
 }
 
-const { title, description, lang = "en", type, publishedAt, noindex } = Astro.props;
+const { title, description, lang = "en", type, publishedAt, noindex, image } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL;
 import { localizedMedia } from "../data/localizedMedia";
 const mediaVersions = localizedMedia();
@@ -44,7 +45,7 @@ const referenceTargets = Object.fromEntries([
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
-		<PageMetadata title={title} description={description} lang={lang} type={type} publishedAt={publishedAt} noindex={noindex} />
+		<PageMetadata title={title} description={description} lang={lang} type={type} publishedAt={publishedAt} noindex={noindex} image={image} />
 
 		<link rel="icon" type="image/svg+xml" href={`${baseUrl}favicon.svg`} />
 		<link rel="icon" href={`${baseUrl}favicon.ico`} />
