@@ -19,7 +19,7 @@ import {
 import { directions } from "../../data/directions";
 import Icon from "../../components/ui/Icon.astro";
 import { Image } from "astro:assets";
-import { directionDoodles } from "../../data/doodles";
+import { directionDoodles, type DoodleName } from "../../data/doodles";
 import Doodle from "../../components/ui/Doodle.astro";
 import Gallery from "../../components/projects/inline/Gallery.astro";
 import Video from "../../components/projects/inline/Video.astro";
@@ -60,6 +60,8 @@ if (!direction) {
 const baseUrl = import.meta.env.BASE_URL;
 const directionUrl = `${baseUrl}directions/${direction.slug}/`;
 const keyDoodle = directionDoodles[direction.slug];
+// Extra hand-drawn accents for particular projects (project id, case-insensitive).
+const projectDoodle = ({ "gamedevelopming/to-the-sky": "stars" } as Record<string, DoodleName>)[project.id.toLowerCase()];
 const musicTrack = direction.slug === "music-sound" ? project.data.audio[0] : undefined;
 const otherAudio = musicTrack ? project.data.audio.slice(1) : project.data.audio;
 ---
@@ -99,6 +101,7 @@ const otherAudio = musicTrack ? project.data.audio.slice(1) : project.data.audio
 						</figure>
 					)}
 					{keyDoodle && !project.data.cover && <Doodle name={keyDoodle} width={110} flow class="mark" />}
+					{projectDoodle && <Doodle name={projectDoodle} width={96} class="project-accent" />}
 				</header>
 			{musicTrack && <MusicPlayer track={musicTrack} cover={project.data.cover} />}
 			{project.data.atlases.length > 0 && <AtlasViewer items={project.data.atlases} />}
@@ -223,6 +226,8 @@ const otherAudio = musicTrack ? project.data.audio.slice(1) : project.data.audio
 	.key-preview :global(.kc) { z-index: 1; opacity: 0.8; width: 1.6rem; height: auto; }
 	.key-preview :global(.tl) { left: 0.5rem; top: 0.5rem; }
 	.key-preview :global(.br) { right: 0.5rem; bottom: 0.5rem; transform: rotate(180deg); }
+	.project-header { position: relative; }
+	.project-header :global(.project-accent) { right: 0; top: 0; opacity: 0.45; }
 	.project-header :global(.mark) { opacity: 0.55; }
 	.the-end { display: grid; justify-items: end; gap: var(--space-1); max-width: 70rem; margin: var(--space-6) auto 0; }
 	.the-end :global(.doodle) { opacity: 0.45; }

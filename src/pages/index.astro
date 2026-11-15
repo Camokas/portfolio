@@ -44,7 +44,6 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 				<div class="frame">
 					<Doodle name="corner-1" width={20} class="corner tl" /><Doodle name="corner-1" width={20} class="corner tr" /><Doodle name="corner-1" width={20} class="corner bl" /><Doodle name="corner-1" width={20} class="corner br" />
 					<Doodle name="author" width={260} flow eager class="author" />
-					<Doodle name="stars" width={96} class="stars" />
 				</div>
 				<figcaption class="label">fig. 1 — {home.heroArtCaption}</figcaption>
 			</figure>
@@ -170,7 +169,6 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 		overflow: hidden;
 	}
 	.frame :global(.author) { opacity: 0.95; width: min(100%, 14rem); height: auto; display: block; }
-	.frame :global(.stars) { right: 0.75rem; top: 0.75rem; opacity: 0.55; width: 4rem; }
 	.frame :global(.corner) { width: 1.1rem; height: auto; opacity: 0.55; }
 	.frame :global(.tl) { left: 0.4rem; top: 0.4rem; }
 	.frame :global(.tr) { right: 0.4rem; top: 0.4rem; transform: rotate(90deg); }
@@ -179,11 +177,12 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 	.actions { position: relative; }
 	.actions :global(.cursor-hint) { left: 16.2rem; top: 2.5rem; opacity: 0.7; transform: rotate(-8deg); }
 	.hero :global(.dots) { left: -1.5rem; bottom: 1.2rem; opacity: 0.35; }
-	.about :global(.spiral) { right: 0; top: 0.5rem; opacity: 0.4; }
+	.about :global(.spiral) { right: 0; top: 2.2rem; opacity: 0.4; }
 	.contact-art :global(.pointer) { opacity: 0.55; margin-bottom: -0.25rem; }
 
 	/* ---------- Sections ---------- */
-	.featured, .directions, .software { padding-block: var(--space-6); }
+	.featured, .directions { padding-block: var(--space-6); }
+	.software { padding-block: var(--space-7) var(--space-6); }
 	.rule { padding-block: var(--space-4); }
 
 	/* Editorial grid: one large work, then a calm rhythm of equal ones. */
@@ -194,7 +193,7 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 	.tile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
 	/* ---------- About ---------- */
-	.about { position: relative; padding-block: var(--space-6); }
+	.about { position: relative; padding-block: var(--space-7) var(--space-6); }
 	.about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--space-6); padding-top: var(--space-6); border-top: 1px solid var(--color-border); }
 	h2 { margin: var(--space-1) 0 0; font-size: var(--text-h2); line-height: 1.15; letter-spacing: -0.03em; }
 	.about-text .lead { margin: 0; color: var(--color-text); max-width: var(--measure); }
@@ -250,7 +249,6 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 		.hero-art figcaption { display: none; }
 		.frame { width: 6.75rem; padding: var(--space-2) var(--space-2) 0; }
 		.frame :global(.author) { width: 4.6rem; }
-		.frame :global(.stars) { width: 1.9rem; right: 0.3rem; top: 0.3rem; }
 		.frame :global(.corner) { display: none; }
 		.actions :global(.cursor-hint), .hero :global(.dots) { display: none; }
 		h1 { font-size: clamp(3rem, 16vw, 4.25rem); }
