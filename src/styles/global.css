@@ -186,3 +186,14 @@ main[id] { scroll-margin-top: 5rem; }
 		scroll-behavior: auto !important;
 	}
 }
+
+/* Touch: every tappable thing gets a finger-sized target (about 44px). */
+@media (pointer: coarse) {
+	.brand, .link-arrow, .back-link, .crumbs a, .footer-copy a, nav[aria-label="Footer navigation"] a { min-height: 2.75rem; display: inline-flex; align-items: center; }
+	summary { min-height: 2.75rem; }
+	input[type="range"] { min-height: 2.75rem; }
+	.years a { min-height: 2.75rem; display: inline-flex; align-items: center; }
+	a, button { -webkit-tap-highlight-color: rgb(244 241 232 / 0.12); }
+}
+/* No accidental double-tap zoom on controls. */
+a, button, summary, input, select { touch-action: manipulation; }

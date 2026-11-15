@@ -170,6 +170,7 @@ const otherAudio = musicTrack ? project.data.audio.slice(1) : project.data.audio
 		line-height: 1.8;
 	}
 	.project-content :global(.case-contents a) { text-underline-offset: .3em; }
+	@media (pointer: coarse) { .project-content :global(.case-contents a) { display: inline-flex; align-items: center; min-height: 2.75rem; } .project-content > :global(.case-contents) { gap: 0 1.25rem; } }
 
 	.back-link {
 		display: flex;
@@ -177,8 +178,8 @@ const otherAudio = musicTrack ? project.data.audio.slice(1) : project.data.audio
 		margin-left: max(0px, calc((100% - 70rem) / 2));
 		align-items: center;
 		gap: 0.4rem;
-		color: var(--color-accent);
-		font-weight: 700;
+		color: var(--color-muted);
+		font-size: var(--text-small);
 		text-decoration: none;
 	}
 
