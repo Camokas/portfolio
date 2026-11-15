@@ -359,5 +359,11 @@ export const editorialTranslations: Record<string, string> = {
   "Page not found | Camoka's Portfolio": "Страница не найдена | Портфолио Camoka",
   "The page may have been moved or the link is mistyped. Start from the home page or browse the projects.": "Возможно, страница перемещена или в ссылке опечатка. Начните с главной страницы или посмотрите проекты.",
   "This page does not exist. Return to the portfolio home page or browse all projects.": "Такой страницы нет. Вернитесь на главную страницу портфолио или посмотрите все проекты.",
-  "Recovery links": "Ссылки для возврата"
+  "Recovery links": "Ссылки для возврата",
+  "Preparing for freelance work: video editing, motion design, and 3D.": "Готовлюсь к фрилансу: видеомонтаж, моушен-дизайн и 3D.",
+  "View selected work": "Смотреть избранные работы",
+  "Get in touch": "Связаться",
+  "Start here": "С чего начать",
+  "Selected Work": "Избранные работы",
+  "A few projects that show my range, from editing and motion to 3D and games.": "Несколько проектов, которые показывают мой диапазон: от монтажа и моушена до 3D и игр."
 };
