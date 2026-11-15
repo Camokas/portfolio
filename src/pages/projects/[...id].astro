@@ -149,6 +149,7 @@ const otherAudio = musicTrack ? project.data.audio.slice(1) : project.data.audio
 				<Content components={mediaComponents} />
 			</div>
 		</article>
+		<div class="the-end" aria-hidden="true"><Doodle name="scribble-line" width={180} flow /><Doodle name="the-end" width={120} flow /></div>
 		<RelatedProjects project={project} />
 	</main>
 </BaseLayout>
@@ -218,6 +219,8 @@ const otherAudio = musicTrack ? project.data.audio.slice(1) : project.data.audio
 	.key-preview { margin: 0; overflow: hidden; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); box-shadow: var(--glow); }
 	.key-preview :global(img) { display: block; width: 100%; height: auto; max-height: 32rem; object-fit: cover; }
 	.project-header :global(.mark) { opacity: 0.55; }
+	.the-end { display: grid; justify-items: end; gap: var(--space-1); max-width: 70rem; margin: var(--space-6) auto 0; }
+	.the-end :global(.doodle) { opacity: 0.45; }
 	@media (max-width: 56rem) { .project-header, .project-header:not(:has(.key-preview)) { grid-template-columns: minmax(0, 1fr); } .project-header :global(.mark) { display: none; } }
 
 	.project-content {

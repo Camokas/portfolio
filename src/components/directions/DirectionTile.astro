@@ -1,6 +1,7 @@
 ---
 // Compact direction link: icon, title, one line, project count and up to three still thumbnails.
-import Icon from "../ui/Icon.astro";
+import Doodle from "../ui/Doodle.astro";
+import { directionDoodles } from "../../data/doodles";
 import type { Direction } from "../../data/directions";
 
 interface Props {
@@ -16,7 +17,7 @@ const href = `${import.meta.env.BASE_URL}directions/${direction.slug}/`;
 <li class="tile">
 	<a href={href}>
 		<span class="top">
-			<span class="icon"><Icon name={direction.icon} size={18} /></span>
+			<span class="icon">{directionDoodles[direction.slug] && <Doodle name={directionDoodles[direction.slug]} width={40} flow class="sketch" />}</span>
 			{count !== undefined && <span class="count">{count} {count === 1 ? "project" : "projects"}</span>}
 		</span>
 		<span class="title">{direction.title}</span>
@@ -49,7 +50,8 @@ const href = `${import.meta.env.BASE_URL}directions/${direction.slug}/`;
 	}
 	a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 	.top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); color: var(--color-faint); }
-	.icon { display: grid; place-items: center; width: 2.1rem; aspect-ratio: 1; border: 1px solid var(--color-border); border-radius: var(--radius-sm); color: var(--color-text); }
+	.icon { display: grid; place-items: center; width: 3rem; aspect-ratio: 1; border: 1px solid var(--color-border); border-radius: var(--radius-sm); }
+	.icon :global(.sketch) { width: auto; height: auto; max-width: 2.2rem; max-height: 2.2rem; opacity: 0.9; }
 	.count { font-family: var(--font-mono); font-size: var(--text-label); }
 	.title { margin-top: var(--space-2); font-size: var(--text-h3); font-weight: 650; line-height: 1.25; letter-spacing: -0.015em; }
 	.desc { color: var(--color-muted); font-size: var(--text-small); line-height: 1.5; }

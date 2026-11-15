@@ -23,8 +23,9 @@ const baseUrl = import.meta.env.BASE_URL;
 			<a href={`${baseUrl}projects/`}><Icon name="layout-grid" size={16} />All projects</a>
 			<a href={`${baseUrl}#contact`}><Icon name="mail" size={16} />Contact</a>
 		</nav>
-		<Doodle name="stars" width={110} />
-		<Doodle name="ducks" width={100} />
+		<Doodle name="walking-person" width={70} />
+		<Doodle name="cross-1" width={64} />
+		<Doodle name="stars" width={90} />
 	</main>
 </BaseLayout>
 
@@ -43,8 +44,9 @@ const baseUrl = import.meta.env.BASE_URL;
 	}
 
 	.not-found > :not(.doodle) { position: relative; z-index: 1; }
-	.not-found :global(.doodle-stars) { left: 0; top: 8%; width: clamp(4.5rem, 14vw, 8rem); opacity: 0.32; }
-	.not-found :global(.doodle-ducks) { right: 0; bottom: 6%; width: clamp(4.5rem, 14vw, 7rem); opacity: 0.4; }
+	.not-found :global(.doodle-walking-person) { left: 0; bottom: 8%; width: clamp(3.5rem, 10vw, 5rem); opacity: 0.6; }
+	.not-found :global(.doodle-cross-1) { right: 6%; bottom: 14%; width: clamp(3rem, 8vw, 4.5rem); opacity: 0.6; }
+	.not-found :global(.doodle-stars) { right: 0; top: 6%; width: clamp(4rem, 12vw, 6.5rem); opacity: 0.32; }
 
 	.code {
 		margin: 0;

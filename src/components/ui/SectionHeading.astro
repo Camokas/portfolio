@@ -2,6 +2,8 @@
 // One compact heading pattern for every section: mono index, title, optional link.
 // Deliberately short: no kicker + giant title + paragraph stack.
 import Icon from "./Icon.astro";
+import Doodle from "./Doodle.astro";
+import type { DoodleName } from "../../data/doodles";
 
 interface Props {
 	id?: string;
@@ -11,16 +13,19 @@ interface Props {
 	href?: string;
 	linkLabel?: string;
 	level?: 1 | 2;
+	/** Small hand-drawn mark next to the title. */
+	accent?: DoodleName;
+	accentWidth?: number;
 }
 
-const { id, index, title, note, href, linkLabel, level = 2 } = Astro.props;
+const { id, index, title, note, href, linkLabel, level = 2, accent, accentWidth = 44 } = Astro.props;
 const Tag = level === 1 ? "h1" : "h2";
 ---
 
 <div class="section-heading">
 	<div class="text">
 		{index && <p class="label index" aria-hidden="true">{index}</p>}
-		<Tag id={id}>{title}</Tag>
+		<div class="title-row"><Tag id={id}>{title}</Tag>{accent && <Doodle name={accent} width={accentWidth} flow class="accent" />}</div>
 		{note && <p class="note">{note}</p>}
 	</div>
 	<slot />
@@ -36,6 +41,8 @@ const Tag = level === 1 ? "h1" : "h2";
 		gap: var(--space-3) var(--space-5);
 		margin-bottom: var(--space-5);
 	}
+	.title-row { display: flex; align-items: center; gap: var(--space-4); }
+	.title-row :global(.accent) { opacity: 0.7; flex: none; }
 	.text { display: grid; gap: var(--space-1); min-width: 0; }
 	h1, h2 { margin: 0; font-size: var(--text-h2); line-height: 1.15; letter-spacing: -0.03em; }
 	h1 { font-size: var(--text-h1); letter-spacing: -0.04em; }

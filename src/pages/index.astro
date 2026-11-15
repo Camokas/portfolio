@@ -40,16 +40,17 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 
 			<figure class="hero-art">
 				<div class="frame">
-					<span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+					<Doodle name="corner-1" width={20} class="corner tl" /><Doodle name="corner-1" width={20} class="corner tr" /><Doodle name="corner-1" width={20} class="corner bl" /><Doodle name="corner-1" width={20} class="corner br" />
 					<Doodle name="author" width={260} flow eager class="author" />
 					<Doodle name="stars" width={96} class="stars" />
 				</div>
+				<Doodle name="hi" width={74} class="hi" />
 				<figcaption class="label">fig. 1 — {home.heroArtCaption}</figcaption>
 			</figure>
 		</section>
 
 		<section id="featured" class="featured container" aria-labelledby="featured-title">
-			<SectionHeading id="featured-title" index="01" title={home.featuredTitle} href={`${baseUrl}projects/`} linkLabel={home.allProjects} />
+			<SectionHeading id="featured-title" accent="star-sketch" accentWidth={46} index="01" title={home.featuredTitle} href={`${baseUrl}projects/`} linkLabel={home.allProjects} />
 			<ul class="featured-grid">
 				{featured.map((project, index) => <ProjectCard project={project} variant={index === 0 ? "feature" : "default"} />)}
 			</ul>
@@ -58,7 +59,7 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 		<div class="container rule"><AsciiRule /></div>
 
 		<section id="directions" class="directions container" aria-labelledby="directions-title">
-			<SectionHeading id="directions-title" index="02" title={home.directionsTitle} href={`${baseUrl}directions/`} linkLabel={home.allDirections} />
+			<SectionHeading id="directions-title" accent="spiral-2" accentWidth={42} index="02" title={home.directionsTitle} href={`${baseUrl}directions/`} linkLabel={home.allDirections} />
 			<ul class="tile-grid">
 				{tiles.map((item) => <DirectionTile direction={item.direction} count={item.count} thumbs={item.thumbs} />)}
 			</ul>
@@ -86,7 +87,7 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 		</section>
 
 		<section id="software" class="software container" aria-labelledby="software-title">
-			<SectionHeading id="software-title" index="04" title={home.softwareTitle} href={`${baseUrl}directions/software/`} linkLabel={home.fullToolkit} />
+			<SectionHeading id="software-title" accent="binary" accentWidth={44} index="04" title={home.softwareTitle} href={`${baseUrl}directions/software/`} linkLabel={home.fullToolkit} />
 			<ul class="tools">
 				{tools.map((tool) => (
 					<li>
@@ -119,6 +120,7 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 					</ul>
 				</div>
 				<div class="contact-art" aria-hidden="true">
+					<Doodle name="arrow-left" width={64} flow class="pointer" />
 					<Doodle name="signature-tilted" width={190} flow class="signature" />
 					<Doodle name="ducks" width={92} flow class="ducks" />
 				</div>
@@ -150,7 +152,7 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 	.lead { margin: var(--space-2) 0 0; max-width: 34rem; color: var(--color-muted); font-size: var(--text-lead); line-height: 1.55; }
 	.actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-4); }
 
-	.hero-art { margin: 0; display: grid; justify-items: center; gap: var(--space-3); }
+	.hero-art { position: relative; margin: 0; display: grid; justify-items: center; gap: var(--space-3); }
 	.frame {
 		position: relative;
 		display: grid;
@@ -166,11 +168,13 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 	}
 	.frame :global(.author) { opacity: 0.95; width: min(100%, 14rem); height: auto; display: block; }
 	.frame :global(.stars) { right: 0.75rem; top: 0.75rem; opacity: 0.55; width: 4rem; }
-	.corner { position: absolute; width: 0.6rem; height: 0.6rem; border: 0 solid var(--color-text); opacity: 0.6; }
-	.tl { left: 0.4rem; top: 0.4rem; border-width: 1px 0 0 1px; }
-	.tr { right: 0.4rem; top: 0.4rem; border-width: 1px 1px 0 0; }
-	.bl { left: 0.4rem; bottom: 0.4rem; border-width: 0 0 1px 1px; }
-	.br { right: 0.4rem; bottom: 0.4rem; border-width: 0 1px 1px 0; }
+	.frame :global(.corner) { width: 1.1rem; height: auto; opacity: 0.55; }
+	.frame :global(.tl) { left: 0.4rem; top: 0.4rem; }
+	.frame :global(.tr) { right: 0.4rem; top: 0.4rem; transform: rotate(90deg); }
+	.frame :global(.br) { right: 0.4rem; bottom: 0.4rem; transform: rotate(180deg); }
+	.frame :global(.bl) { left: 0.4rem; bottom: 0.4rem; transform: rotate(270deg); }
+	.hero-art :global(.hi) { left: -3.6rem; top: 0.5rem; opacity: 0.8; transform: rotate(-6deg); }
+	.contact-art :global(.pointer) { opacity: 0.55; margin-bottom: -0.25rem; }
 
 	/* ---------- Sections ---------- */
 	.featured, .directions, .software { padding-block: var(--space-6); }
@@ -226,6 +230,7 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 		.tile-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 	}
 	@media (max-width: 56rem) {
+		.hero-art :global(.hi) { left: -1rem; top: -1.4rem; }
 		.contact-box { grid-template-columns: 1fr; }
 		.contact-art { grid-auto-flow: column; justify-content: start; align-items: end; }
 		.about-grid { grid-template-columns: 1fr; gap: var(--space-3); }
@@ -240,7 +245,8 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 		.frame { width: 6.75rem; padding: var(--space-2) var(--space-2) 0; }
 		.frame :global(.author) { width: 4.6rem; }
 		.frame :global(.stars) { width: 1.9rem; right: 0.3rem; top: 0.3rem; }
-		.corner { display: none; }
+		.frame :global(.corner) { display: none; }
+		.hero-art :global(.hi) { display: none; }
 		h1 { font-size: clamp(3rem, 16vw, 4.25rem); }
 	}
 	@media (prefers-reduced-motion: reduce) {

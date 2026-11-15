@@ -1,4 +1,5 @@
 ---
+import Doodle from "../ui/Doodle.astro";
 import { directions } from "../../data/directions";
 interface Props { activeDirections?: string[]; }
 const { activeDirections } = Astro.props;
@@ -28,7 +29,7 @@ const catalogDirections = directions.filter(direction => direction.slug !== "sof
 	</form>
 	<p class="catalog-results" data-results role="status" hidden></p>
 	<slot />
-	<p class="no-results" data-empty hidden>No matching projects. Try another search or reset the filters.</p>
+	<div class="no-results" data-empty hidden><Doodle name="zzz" width={72} flow /><p>No matching projects. Try another search or reset the filters.</p></div>
 </project-catalog>
 
 <script>
@@ -102,6 +103,9 @@ const catalogDirections = directions.filter(direction => direction.slug !== "sof
 
 <style>
 	project-catalog { display: block; }
+	.no-results p { margin: 0; }
+	.no-results[hidden] { display: none; }
+	.no-results :global(.doodle) { opacity: 0.6; flex: none; }
 	.catalog-controls { display: grid; grid-template-columns: minmax(12rem, 2fr) 1fr 1fr auto; align-items: end; gap: var(--space-3); margin: 0 0 var(--space-4); padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); }
 	.catalog-controls[hidden], [hidden] { display: none; }
 	label { display: grid; gap: var(--space-1); color: var(--color-faint); font-family: var(--font-mono); font-size: var(--text-label); }
@@ -111,7 +115,7 @@ const catalogDirections = directions.filter(direction => direction.slug !== "sof
 	button:hover { border-color: var(--color-text); }
 	input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 0.2rem; }
 	.catalog-results, .no-results { margin: 0 0 var(--space-4); color: var(--color-faint); font-family: var(--font-mono); font-size: var(--text-label); }
-	.no-results { padding: var(--space-5); border: 1px dashed var(--color-border-strong); border-radius: var(--radius-md); font-family: inherit; font-size: var(--text-small); color: var(--color-muted); }
+	.no-results { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-5); border: 1px dashed var(--color-border-strong); border-radius: var(--radius-md); font-family: inherit; font-size: var(--text-small); color: var(--color-muted); }
 	@media (max-width: 56rem) { .catalog-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); } .search-field { grid-column: 1 / -1; } }
 	@media (max-width: 30rem) { .catalog-controls { grid-template-columns: 1fr; } }
 </style>

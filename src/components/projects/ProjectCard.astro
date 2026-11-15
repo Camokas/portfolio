@@ -3,7 +3,8 @@ import MediaPreview from "./MediaPreview.astro";
 import ProjectDate from "./ProjectDate.astro";
 import { projectPreviews } from "../../data/projectPreviews";
 import type { CollectionEntry } from "astro:content";
-import Icon from "../ui/Icon.astro";
+import Doodle from "../ui/Doodle.astro";
+import { directionDoodles } from "../../data/doodles";
 import { directions } from "../../data/directions";
 import { translateExact } from "../../data/translations";
 
@@ -37,7 +38,7 @@ const russianSearch = [project.data.title, project.data.summary, ...project.data
 		<div class="thumb">
 			{previews.length > 0 ? <MediaPreview items={previews} /> : (
 				<div class="placeholder" aria-hidden="true">
-					{direction && <Icon name={direction.icon} size={30} strokeWidth={1.4} />}
+					{direction && directionDoodles[direction.slug] && <Doodle name={directionDoodles[direction.slug]} width={84} flow class="sketch" />}
 					<span class="glyphs">░▒▓█▓▒░</span>
 				</div>
 			)}
@@ -94,6 +95,7 @@ const russianSearch = [project.data.title, project.data.summary, ...project.data
 			radial-gradient(circle at 1px 1px, rgb(244 241 232 / 0.14) 1px, transparent 1.5px) 0 0 / 14px 14px,
 			var(--color-surface-2);
 	}
+	.placeholder :global(.sketch) { width: auto; height: auto; max-width: 5.5rem; max-height: 5.5rem; opacity: 0.75; }
 	.glyphs { font-family: var(--font-mono); letter-spacing: 0.2em; font-size: 0.9rem; opacity: 0.7; }
 
 	.caption { display: grid; gap: var(--space-2); padding: 0.85rem 1rem 1rem; }
