@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import interLatin from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 import SiteFooter from "../components/layout/SiteFooter.astro";
 import SiteHeader from "../components/layout/SiteHeader.astro";
 import PageMetadata from "../components/layout/PageMetadata.astro";
@@ -47,6 +48,7 @@ const referenceTargets = Object.fromEntries([
 		<meta name="generator" content={Astro.generator} />
 		<PageMetadata title={title} description={description} lang={lang} type={type} publishedAt={publishedAt} noindex={noindex} image={image} />
 
+		<link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
 		<link rel="icon" type="image/svg+xml" href={`${baseUrl}favicon.svg`} />
 		<link rel="icon" href={`${baseUrl}favicon.ico`} />
 
