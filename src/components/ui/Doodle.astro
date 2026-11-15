@@ -1,0 +1,41 @@
+---
+// Decorative hand-drawn sketch by the author. Purely visual, hidden from assistive tech.
+interface Props {
+	name: "author" | "ducks" | "island" | "stars" | "workspace" | "signature-line" | "signature-stacked" | "signature-tilted";
+	width: number;
+	height: number;
+	class?: string;
+}
+
+const { name, width, height, class: className } = Astro.props;
+const src = `${import.meta.env.BASE_URL}decor/${name}.webp`;
+---
+
+<img
+	class:list={["doodle", `doodle-${name}`, className]}
+	src={src}
+	width={width}
+	height={height}
+	alt=""
+	aria-hidden="true"
+	loading="lazy"
+	decoding="async"
+	draggable="false"
+/>
+
+<style>
+	.doodle {
+		position: absolute;
+		z-index: 0;
+		height: auto;
+		max-width: none;
+		opacity: 0.2;
+		pointer-events: none;
+		user-select: none;
+		-webkit-user-select: none;
+	}
+
+	@media print {
+		.doodle { display: none; }
+	}
+</style>

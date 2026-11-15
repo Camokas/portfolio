@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Icon from "../components/ui/Icon.astro";
+import Doodle from "../components/ui/Doodle.astro";
 
 const baseUrl = import.meta.env.BASE_URL;
 ---
@@ -22,11 +23,15 @@ const baseUrl = import.meta.env.BASE_URL;
 			<a href={`${baseUrl}projects/`}><Icon name="layout-grid" size={16} />All projects</a>
 			<a href={`${baseUrl}#contact`}><Icon name="mail" size={16} />Contact</a>
 		</nav>
+		<Doodle name="stars" width={400} height={460} />
+		<Doodle name="ducks" width={310} height={360} />
 	</main>
 </BaseLayout>
 
 <style>
 	.not-found {
+		position: relative;
+		overflow-x: clip;
 		display: grid;
 		flex: 1;
 		align-content: center;
@@ -36,6 +41,10 @@ const baseUrl = import.meta.env.BASE_URL;
 		padding-block: clamp(3rem, 12vw, 8rem);
 		text-align: center;
 	}
+
+	.not-found > :not(.doodle) { position: relative; z-index: 1; }
+	.not-found :global(.doodle-stars) { left: 0; top: 8%; width: clamp(4.5rem, 14vw, 8rem); opacity: 0.32; }
+	.not-found :global(.doodle-ducks) { right: 0; bottom: 6%; width: clamp(4.5rem, 14vw, 7rem); opacity: 0.4; }
 
 	.code {
 		margin: 0;

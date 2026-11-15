@@ -8,6 +8,7 @@ import { home } from "../data/home";
 import { getCollection } from "astro:content";
 import { projectPreviews } from "../data/projectPreviews";
 import ProjectCard from "../components/projects/ProjectCard.astro";
+import Doodle from "../components/ui/Doodle.astro";
 
 const projects = (await getCollection("projects", ({ data }) => !data.draft))
 	.sort((a, b) => b.data.date.getTime() - a.data.date.getTime() || a.id.localeCompare(b.id));
@@ -40,6 +41,8 @@ const featuredProjects = home.featuredProjects.map((id) => {
 				<a class="button" href="#contact"><Icon name="mail" size={17} />{home.getInTouch}</a>
 			</div>
 			<p class="hero-status">{home.heroStatus}</p>
+			<Doodle name="author" width={720} height={1027} />
+			<Doodle name="stars" width={400} height={460} />
 		</section>
 
 		<section class="about" aria-label={home.aboutTitle}>
@@ -106,6 +109,7 @@ const featuredProjects = home.featuredProjects.map((id) => {
 				</p>
 			</div>
 
+			<Doodle name="island" width={230} height={280} />
 			<ul class="direction-grid">
 				{
 					directions.filter(direction => direction.slug !== "software").map((direction, index) => (
@@ -127,6 +131,7 @@ const featuredProjects = home.featuredProjects.map((id) => {
 				<h2 id="software-title">Software I Use</h2>
 				<p class="section-description">The tools behind my projects and creative workflow.</p>
 			</div>
+			<Doodle name="workspace" width={335} height={290} />
 			<ul class="direction-grid">
 				{directions.filter(direction => direction.slug === "software").map(direction => (
 					<DirectionCard
@@ -148,6 +153,10 @@ const featuredProjects = home.featuredProjects.map((id) => {
 				</p>
 
 				<h2 id="contact-title">{home.contactTitle}</h2>
+				<div class="contact-art" aria-hidden="true">
+					<Doodle name="signature-line" width={430} height={130} />
+					<Doodle name="ducks" width={310} height={360} />
+				</div>
 			</div>
 
 			<div class="contact-content">
@@ -200,6 +209,60 @@ const featuredProjects = home.featuredProjects.map((id) => {
 		min-height: clamp(17rem, 38svh, 24rem);
 		padding-block: clamp(2.5rem, 7vh, 4rem);
 		text-align: center;
+	}
+
+	/* Author sketches: faint hand-drawn accents behind the content. */
+	.hero { position: relative; overflow-x: clip; }
+	.hero > :not(.doodle) { position: relative; z-index: 1; }
+	.hero :global(.doodle-author) {
+		right: clamp(-1rem, 2vw, 2rem);
+		bottom: 0;
+		width: clamp(9rem, 21vw, 16rem);
+		opacity: 0.36;
+		-webkit-mask-image: linear-gradient(#000 55%, transparent);
+		mask-image: linear-gradient(#000 55%, transparent);
+	}
+	.hero :global(.doodle-stars) {
+		left: clamp(0rem, 3vw, 3rem);
+		top: 10%;
+		width: clamp(4.5rem, 10vw, 8.5rem);
+		opacity: 0.34;
+	}
+	.directions,
+	.software-section { position: relative; overflow-x: clip; }
+	.directions > .section-heading,
+	.directions > .direction-grid,
+	.software-section > .section-heading,
+	.software-section > .direction-grid { position: relative; z-index: 1; }
+	.directions :global(.doodle-island) {
+		right: 0;
+		top: clamp(2.5rem, 7vw, 6rem);
+		width: clamp(5rem, 11vw, 8.5rem);
+		opacity: 0.4;
+	}
+	.software-section :global(.doodle-workspace) {
+		right: 0;
+		top: clamp(1.5rem, 5vw, 3.5rem);
+		width: clamp(6rem, 14vw, 11rem);
+		opacity: 0.4;
+	}
+	.contact-art { position: relative; min-height: 7rem; margin-top: 0.25rem; }
+	.contact-art :global(.doodle-signature-line) {
+		left: 0;
+		bottom: 0;
+		width: clamp(8.5rem, 18vw, 12rem);
+		opacity: 0.75;
+	}
+	.contact-art :global(.doodle-ducks) {
+		left: clamp(9rem, 19vw, 13rem);
+		top: -1rem;
+		width: 5.5rem;
+		opacity: 0.45;
+	}
+	@media (max-width: 48rem) {
+		.directions :global(.doodle-island),
+		.software-section :global(.doodle-workspace) { display: none; }
+		.hero :global(.doodle-author) { opacity: 0.22; }
 	}
 
 	.hero-actions {
