@@ -61,7 +61,8 @@ const href = `${import.meta.env.BASE_URL}directions/${slug}/`;
 	.direction-copy {
 		position: relative;
 		z-index: 1;
-		background: linear-gradient(rgb(14 14 14 / 0.72), rgb(14 14 14 / 0.94));
+		background: linear-gradient(rgb(14 14 14 / 0.46), rgb(14 14 14 / 0.94));
+		text-shadow: 0 1px 14px rgb(0 0 0 / 0.55);
 		display: grid;
 		grid-template-rows: auto 1fr auto;
 		gap: 1.25rem;
@@ -71,10 +72,13 @@ const href = `${import.meta.env.BASE_URL}directions/${slug}/`;
 		text-decoration: none;
 	}
 
-	.direction-card:hover {
-		transform: translateY(-0.25rem);
-		border-color: var(--color-accent);
+	@media (hover: hover) {
+		.direction-card:hover {
+			transform: translateY(-0.25rem);
+			border-color: var(--color-accent);
+		}
 	}
+	.direction-card:focus-within { border-color: var(--color-accent); }
 
 	.direction-copy:focus-visible {
 		outline: 2px solid var(--color-accent);

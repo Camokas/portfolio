@@ -1,9 +1,25 @@
 import type { PreviewMedia } from "../data/projectPreviews";
 import { localizedMediaUrl } from "./localizedMediaClient";
+import { createPreviewBudget, heavyLimit } from "./previewBudget.mjs";
 
 // Общий интервал после первой смены (миллисекунды).
 const MEDIA_INTERVAL_MS = 3500;
 let modelModule: typeof import("./modelPreview") | undefined;
+
+// Видео и 3D-модели ограничены общим бюджетом на всю страницу; картинки не ограничены.
+const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+const coarsePointer = matchMedia("(pointer: coarse)");
+const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
+const budget = createPreviewBudget(0);
+const refreshBudgetLimit = () => budget.setLimit(heavyLimit({
+	reducedMotion: reducedMotion.matches, saveData, coarsePointer: coarsePointer.matches,
+	cores: navigator.hardwareConcurrency || 4,
+}));
+refreshBudgetLimit();
+reducedMotion.addEventListener("change", refreshBudgetLimit);
+coarsePointer.addEventListener("change", refreshBudgetLimit);
+// При экономии трафика или reduced motion карточки остаются статичными.
+const staticMode = () => reducedMotion.matches || saveData;
 
 class MediaPreview extends HTMLElement {
 	items: PreviewMedia[] = [];
@@ -19,7 +35,20 @@ class MediaPreview extends HTMLElement {
 	prepared = new Map<number, HTMLElement>();
 	shownInCycle = new Set<number>();
 	pending = new Set<number>();
+	hot = false;
 	get running() { return this.visible && !document.hidden && this.isConnected; }
+	isHeavy(index: number) { const kind = this.items[index]?.kind; return kind === "video" || kind === "model"; }
+	heavyInUse() { return [...this.prepared.keys(), ...this.pending].some(index => this.isHeavy(index)); }
+	canUseHeavy() { return budget.tryAcquire(this, { priority: this.hot }); }
+	refreshBudget() { if (!this.heavyInUse()) budget.release(this); }
+	// Called by the budget when a hovered/focused card takes this card's slot.
+	yieldHeavy() {
+		this.prepared.forEach((element, index) => {
+			if (!this.isHeavy(index)) return;
+			modelModule?.updateModelPreview(element, false);
+			if (element instanceof HTMLVideoElement) element.pause();
+		});
+	}
 	connectedCallback() {
 		this.items = (JSON.parse(this.dataset.items ?? "[]") as PreviewMedia[]).map((item, templateIndex) => ({...item, templateIndex}));
 		if (!this.items.length) return;
@@ -49,22 +78,32 @@ class MediaPreview extends HTMLElement {
 			this.prepared.set(0, initial); this.index = 0;
 			this.shownInCycle.add(0);
 		}
-		this.observer = new IntersectionObserver(([entry]) => {
-			this.visible = entry.isIntersecting;
+		// Animate only cards that are clearly on screen.
+		this.observer = new IntersectionObserver((entries) => {
+			const entry = entries[entries.length - 1];
+			this.visible = entry.isIntersecting && entry.intersectionRatio >= 0.35;
 			this.sync();
-		}, { threshold: 0.05 });
+		}, { threshold: [0, 0.35] });
 		this.observer.observe(this);
+		// Pointer or keyboard focus gives this card priority for a heavy slot.
+		const card = this.closest("li") ?? this.parentElement;
+		const setHot = (hot: boolean) => { if (this.hot === hot) return; this.hot = hot; this.sync(); };
+		card?.addEventListener("pointerenter", (event) => { if ((event as PointerEvent).pointerType !== "touch") setHot(true); }, options);
+		card?.addEventListener("pointerleave", () => setHot(false), options);
+		card?.addEventListener("focusin", () => setHot(true), options);
+		card?.addEventListener("focusout", () => setHot(false), options);
 	}
 	disconnectedCallback() {
 		this.stopTimer(); this.observer?.disconnect(); this.events?.abort();
 		this.prepared.forEach((element) => this.release(element));
 		this.prepared.clear();
+		budget.release(this);
 	}
 	sync() {
 		this.updateVideo();
 		if (!this.running) { this.stopTimer(); return; }
 		this.preload();
-		if (this.items.length > 1 && this.timer === undefined) {
+		if (this.items.length > 1 && this.timer === undefined && !staticMode()) {
 			this.deadline = performance.now() + this.nextDelay;
 			this.timer = setTimeout(() => {
 				this.timer = undefined;
@@ -83,21 +122,26 @@ class MediaPreview extends HTMLElement {
 	}
 	updateVideo() {
 		this.dataset.previewRunning = String(this.running);
+		// An offscreen card gives its heavy slot back; it is taken again when visible.
+		if (!this.running) budget.release(this);
 		this.prepared.forEach((element, index) => {
-			modelModule?.updateModelPreview(element, this.running && index === this.index);
+			const play = this.running && index === this.index && (!this.isHeavy(index) || this.canUseHeavy());
+			modelModule?.updateModelPreview(element, play);
 			if (!(element instanceof HTMLVideoElement)) return;
-			if (this.running && index === this.index) void element.play().catch(() => {});
+			if (play) void element.play().catch(() => {});
 			else element.pause();
 		});
 	}
 	preload() {
 		if (!this.running) return;
-		// Keep only the current slide and two random ready/loading candidates.
+		// Keep the current slide plus one candidate; heavy media needs a budget slot.
 		let candidates = this.items.map((_, index) => index).filter(index => index !== this.index && !this.failed.has(index) && !this.shownInCycle.has(index));
 		if (!candidates.length) candidates = this.items.map((_, index) => index).filter(index => index !== this.index && !this.failed.has(index));
 		candidates = candidates.filter(index => !this.prepared.has(index) && !this.pending.has(index));
-		while (candidates.length && this.pending.size + this.prepared.size < 3 && this.pending.size < 2) {
+		if (this.heavyInUse()) candidates = candidates.filter(index => !this.isHeavy(index));
+		while (candidates.length && this.pending.size + this.prepared.size < 2 && this.pending.size < 1) {
 			const index = candidates.splice(Math.floor(Math.random() * candidates.length), 1)[0];
+			if (this.isHeavy(index) && !this.canUseHeavy()) { candidates = candidates.filter(other => !this.isHeavy(other)); continue; }
 			this.pending.add(index);
 			void this.prepare(this.items[index], index).then((element) => {
 				if (!this.isConnected) { this.release(element); return; }
@@ -106,7 +150,7 @@ class MediaPreview extends HTMLElement {
 			}).catch((error) => {
 				this.failed.add(index);
 				console.warn("[Portfolio preview] Skipping unavailable media:", this.items[index].src, error);
-			}).finally(() => { this.pending.delete(index); this.preload(); });
+			}).finally(() => { this.pending.delete(index); this.refreshBudget(); this.preload(); });
 		}
 	}
 
@@ -119,7 +163,8 @@ class MediaPreview extends HTMLElement {
 			this.shownInCycle.clear();
 		}
 		const candidates = [...this.prepared.keys()]
-			.filter(index => index !== this.index && !this.shownInCycle.has(index));
+			.filter(index => index !== this.index && !this.shownInCycle.has(index))
+			.filter(index => !this.isHeavy(index) || this.canUseHeavy());
 		if (candidates.length) {
 			this.show(candidates[Math.floor(Math.random() * candidates.length)]);
 		}
@@ -146,6 +191,7 @@ class MediaPreview extends HTMLElement {
 			modelModule?.updateModelPreview(oldElement, false);
 			this.prepared.delete(oldIndex);
 		}
+		this.refreshBudget();
 		setTimeout(() => old.forEach((node) => { node.remove(); this.release(node); }), 1250);
 		this.index = index;
 		this.shownInCycle.add(index);
@@ -155,6 +201,7 @@ class MediaPreview extends HTMLElement {
 	release(element: HTMLElement) {
 		modelModule?.releaseModelPreview(element);
 		if (element instanceof HTMLVideoElement) { element.pause(); element.removeAttribute("src"); element.replaceChildren(); element.load(); }
+		this.refreshBudget();
 	}
 	async prepare(item: PreviewMedia, index: number): Promise<HTMLElement> {
 		if (item.kind === "atlas") {

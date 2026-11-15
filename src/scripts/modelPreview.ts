@@ -72,7 +72,7 @@ async function load(src: string): Promise<Resource> {
 }
 function gpu() {
   if (!renderer) {
-    renderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
+    renderer = new THREE.WebGLRenderer({alpha: true, antialias: false, powerPreference: "low-power"});
     renderer.setPixelRatio(1); renderer.setClearColor(0x000000, 0);
     renderer.domElement.addEventListener("webglcontextlost", event => { event.preventDefault(); if (frame) cancelAnimationFrame(frame); frame = 0; });
     renderer.domElement.addEventListener("webglcontextrestored", schedule);
@@ -84,7 +84,7 @@ function draw(state: State) {
   const gpuRenderer = gpu(); if (gpuRenderer.getContext().isContextLost()) return;
   const rect = state.canvas.getBoundingClientRect();
   const aspect = rect.width && rect.height ? rect.width / rect.height : state.aspect;
-  const width = Math.min(640, Math.max(240, Math.round(rect.width || 480)));
+  const width = Math.min(480, Math.max(240, Math.round(rect.width || 480)));
   const height = Math.max(1, Math.round(width / aspect));
   if (state.canvas.width !== width || state.canvas.height !== height) { state.canvas.width = width; state.canvas.height = height; }
   gpuRenderer.setSize(width, height, false);
@@ -116,7 +116,7 @@ function schedule() { if (!frame && active.size && !document.hidden) frame = req
 function tick(time: number) {
   frame = 0;
   if (document.hidden) return;
-  if (time - lastFrame >= 1000 / 24) {
+  if (time - lastFrame >= 1000 / 20) {
     lastFrame = time;
     for (const state of active) {
       if (!state.canvas.isConnected) { active.delete(state); continue; }

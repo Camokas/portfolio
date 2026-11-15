@@ -63,8 +63,11 @@ const isProjectsPage = Astro.url.pathname.startsWith(projectsUrl);
 		position: sticky;
 		top: 0;
 		z-index: 10;
+		border-bottom: 1px solid #2d2d2d;
 		border-bottom: 1px solid color-mix(in srgb, var(--color-border) 75%, transparent);
+		background: rgb(14 14 14 / 0.92);
 		background: color-mix(in srgb, var(--color-background) 88%, transparent);
+		-webkit-backdrop-filter: blur(1rem);
 		backdrop-filter: blur(1rem);
 	}
 
@@ -140,11 +143,36 @@ const isProjectsPage = Astro.url.pathname.startsWith(projectsUrl);
 		.nav-link {
 			gap: 0;
 			font-size: 0;
+			min-width: 2.4rem;
+		}
+
+		.brand {
+			font-size: 1.05rem;
 		}
 
 		.nav-link :global(svg) {
 			width: 1.15rem;
 			height: 1.15rem;
+		}
+	}
+
+	/* Very narrow phones: the brand already links home, so drop the Home icon. */
+	@media (max-width: 24rem) {
+		.nav-link[aria-label="Home"] {
+			display: none;
+		}
+
+		.header-inner {
+			gap: 0.35rem;
+		}
+
+		.header-actions,
+		nav {
+			gap: 0.1rem;
+		}
+
+		.nav-link {
+			min-width: 2.2rem;
 		}
 	}
 </style>

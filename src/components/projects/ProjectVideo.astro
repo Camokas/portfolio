@@ -216,6 +216,7 @@ function resolveMediaUrl(src: string): string {
 		width: 100%;
 		aspect-ratio: 16 / 9;
 		object-fit: contain;
+		max-height: min(68vh, 42rem);
 		max-height: min(68svh, 42rem);
 		border: 0;
 		border-radius: 0.4rem;
@@ -230,7 +231,7 @@ function resolveMediaUrl(src: string): string {
 		line-height: 1.5;
 	}
 	video.auto-aspect { aspect-ratio: var(--video-ratio, auto 16 / 9); height: auto; }
-	video.portrait { width: auto; max-width: 100%; height: min(68svh, 42rem); aspect-ratio: var(--video-ratio, auto); }
+	video.portrait { width: auto; max-width: 100%; height: min(68vh, 42rem); height: min(68svh, 42rem); aspect-ratio: var(--video-ratio, auto); }
 
 	figcaption strong {
 		font-size: 0.95rem;
