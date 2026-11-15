@@ -176,6 +176,9 @@ const projects = defineCollection({
 			description: z.string().optional(),
 		})).default([]),
 		featured: z.boolean().default(false),
+		// Optional editorial weight, see src/data/priority.mjs. Both fields are backwards compatible.
+		priority: z.number().min(-5).max(10).optional(),
+		pinned: z.boolean().default(false),
 		draft: z.boolean().default(false),
 		demo: z.boolean().default(false),
 	}).refine(project => !project.dateEnd || project.dateEnd >= project.date, {

@@ -1,38 +1,37 @@
-// Тексты главной страницы. Меняйте значения в кавычках; разметку трогать не нужно.
-// Каждый элемент aboutParagraphs — отдельный абзац раскрытого описания.
+// Тексты и настройки главной страницы. Меняйте значения в кавычках; разметку трогать не нужно.
+// Каждый элемент aboutParagraphs — отдельный абзац описания (первый виден сразу, остальные раскрываются).
 export const home = {
 	pageTitle: "Camoka's Portfolio",
 	pageDescription: "Camoka's multimedia portfolio featuring creative and development projects.",
 	eyebrow: "Portfolio website",
 	name: "Camoka",
 	alias: "or Daniil Doroshkin",
+	heroLine: "I make games, 3D, video, motion, music, and drawings, and keep all of it here as a long-term archive.",
+	heroArtCaption: "Drawn by me",
 	aboutTitle: "About this portfolio",
-	aboutPreview: "Video editing, motion design, and 3D, with a background in game development.",
 	aboutParagraphs: [
 		"My background spans game development, video editing, motion graphics, and 3D, with music and community projects along the way.",
 		"I have been learning creative tools independently since I was young. Limited hardware taught me to simplify heavy projects and make the most of what I had. I enjoy refining motion and visual details and following an idea through to a finished result.",
 	],
 	viewWork: "View selected work",
 	getInTouch: "Get in touch",
-	featuredKicker: "Start here",
 	featuredTitle: "Selected Work",
-	featuredDescription: "A few projects that show my range, from editing and motion to 3D and games.",
 	allProjects: "All projects",
-	// Project ids (folder/file name, any case) shown on the home page, in this order.
-	featuredProjects: [
-		"VideoEditing/camoka-youtube-gamedev",
-		"MotionDesign/islands-game-version-intro",
-		"3DModeling/trashtocash-models",
-		"3DModeling/misform-models",
-		"GameDevelopming/misform",
-		"GameDevelopming/islands",
-	],
+	/**
+	 * Работы на главной подбираются автоматически (см. src/data/priority.mjs).
+	 * Сюда можно вписать id проектов (папка/имя файла), которые нужно закрепить первыми, в нужном порядке.
+	 * Остальные места заполняются автоматически. Пустой список = полностью автоматический выбор.
+	 */
+	pinnedProjects: [] as string[],
+	highlightCount: 6,
+	/** Сколько направлений показывать на главной (остальные — по ссылке «All directions»). */
+	directionCount: 4,
 	readMore: "Read more",
 	showLess: "Show less",
-	directionsKicker: "What I explore",
 	directionsTitle: "Creative Directions",
-	directionsDescription: "Development, visual art, sound, motion, and the ideas that connect them.",
-	contactKicker: "Get in touch",
+	allDirections: "All directions",
+	softwareTitle: "Software I Use",
+	fullToolkit: "Full toolkit",
 	contactTitle: "Contact",
 	contactDescription: "Questions, collaboration, or a project in mind? You can reach me by email or Telegram.",
 };

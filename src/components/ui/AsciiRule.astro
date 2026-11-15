@@ -1,0 +1,21 @@
+---
+// Thin typographic divider in the spirit of old personal sites. Decorative only.
+interface Props { mark?: string }
+const { mark = "✱" } = Astro.props;
+---
+
+<div class="rule" aria-hidden="true"><span>+</span><i></i><b>{mark}</b><i></i><span>+</span></div>
+
+<style>
+	.rule {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+		color: var(--color-faint);
+		font-family: var(--font-mono);
+		font-size: var(--text-label);
+		user-select: none;
+	}
+	i { flex: 1; border-top: 1px dashed var(--color-border-strong); }
+	b { font-weight: 400; letter-spacing: 0.4em; }
+</style>

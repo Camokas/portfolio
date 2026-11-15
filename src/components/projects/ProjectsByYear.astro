@@ -1,0 +1,58 @@
+---
+// Compact archive view: projects grouped by start year, newest first.
+// Chronology stays visible without stretching cards to show durations
+// (a project's own period is shown in its card).
+import type { CollectionEntry } from "astro:content";
+import ProjectCard from "./ProjectCard.astro";
+
+interface Props { projects: CollectionEntry<"projects">[]; ranks?: Map<string, number>; }
+const { projects, ranks } = Astro.props;
+
+const ordered = [...projects].sort((a, b) => b.data.date.getTime() - a.data.date.getTime() || a.id.localeCompare(b.id));
+const groups = new Map<number, CollectionEntry<"projects">[]>();
+for (const project of ordered) {
+	const year = project.data.date.getUTCFullYear();
+	groups.set(year, [...(groups.get(year) ?? []), project]);
+}
+const years = [...groups.keys()];
+---
+
+{years.length > 1 && (
+	<nav class="years" aria-label="Jump to year">
+		{years.map((year) => <a href={`#year-${year}`}>{year}</a>)}
+	</nav>
+)}
+
+<div class="by-year">
+	{years.map((year) => (
+		<section class="year" id={`year-${year}`} aria-labelledby={`year-title-${year}`}>
+			<h3 id={`year-title-${year}`} class="year-title">
+				<span>{year}</span><i aria-hidden="true"></i><small>{groups.get(year)!.length} {groups.get(year)!.length === 1 ? "project" : "projects"}</small>
+			</h3>
+			<ul class="grid">
+				{groups.get(year)!.map((project) => <ProjectCard project={project} rank={ranks?.get(project.id)} />)}
+			</ul>
+		</section>
+	))}
+</div>
+
+<style>
+	.years { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-5); }
+	.years a {
+		padding: 0.25rem 0.7rem;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		color: var(--color-muted);
+		font-family: var(--font-mono);
+		font-size: var(--text-small);
+		text-decoration: none;
+	}
+	.years a:hover, .years a:focus-visible { color: var(--color-text); border-color: var(--color-border-strong); }
+	.by-year { display: grid; gap: var(--space-7); }
+	.year { scroll-margin-top: 5.5rem; }
+	.year-title { display: flex; align-items: center; gap: var(--space-4); margin: 0 0 var(--space-4); font-size: var(--text-h2); line-height: 1; letter-spacing: -0.03em; }
+	.year-title i { flex: 1; border-top: 1px dashed var(--color-border-strong); }
+	.year-title small { color: var(--color-faint); font-family: var(--font-mono); font-size: var(--text-label); font-weight: 400; letter-spacing: 0; }
+	.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr)); gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
+	@media (max-width: 36rem) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); } }
+</style>

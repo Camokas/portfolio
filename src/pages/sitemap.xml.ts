@@ -17,6 +17,7 @@ export const GET: APIRoute = async ({ site }) => {
 	const entries: { loc: string; lastmod?: Date }[] = [
 		{ loc: absolute(base) },
 		{ loc: absolute(`${base}projects/`) },
+		{ loc: absolute(`${base}directions/`) },
 		...directions.map((direction) => ({ loc: absolute(`${base}directions/${direction.slug}/`) })),
 		...software.map((tool) => ({ loc: absolute(softwareUrl(tool.slug, base)) })),
 		...projects.map((project) => ({

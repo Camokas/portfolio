@@ -1,0 +1,45 @@
+---
+// One compact heading pattern for every section: mono index, title, optional link.
+// Deliberately short: no kicker + giant title + paragraph stack.
+import Icon from "./Icon.astro";
+
+interface Props {
+	id?: string;
+	index?: string;
+	title: string;
+	note?: string;
+	href?: string;
+	linkLabel?: string;
+	level?: 1 | 2;
+}
+
+const { id, index, title, note, href, linkLabel, level = 2 } = Astro.props;
+const Tag = level === 1 ? "h1" : "h2";
+---
+
+<div class="section-heading">
+	<div class="text">
+		{index && <p class="label index" aria-hidden="true">{index}</p>}
+		<Tag id={id}>{title}</Tag>
+		{note && <p class="note">{note}</p>}
+	</div>
+	<slot />
+	{href && linkLabel && <a class="link-arrow" href={href}>{linkLabel} <Icon name="arrow-right" size={16} /></a>}
+</div>
+
+<style>
+	.section-heading {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: var(--space-3) var(--space-5);
+		margin-bottom: var(--space-5);
+	}
+	.text { display: grid; gap: var(--space-1); min-width: 0; }
+	h1, h2 { margin: 0; font-size: var(--text-h2); line-height: 1.15; letter-spacing: -0.03em; }
+	h1 { font-size: var(--text-h1); letter-spacing: -0.04em; }
+	.note { margin: 0; max-width: var(--measure); color: var(--color-muted); font-size: var(--text-small); }
+	.link-arrow :global(svg) { transition: transform 160ms var(--ease); }
+	.link-arrow:hover :global(svg) { transform: translateX(0.2rem); }
+</style>

@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import DirectionTile from "../../components/directions/DirectionTile.astro";
+import Doodle from "../../components/ui/Doodle.astro";
+import Icon from "../../components/ui/Icon.astro";
+import { directionThumbs, listProjects, orderedDirections } from "../../data/rankings";
+
+const projects = await listProjects();
+const items = await Promise.all(
+	orderedDirections(projects).map(async (item) => ({
+		...item,
+		thumbs: item.slug === "software" ? [] : await directionThumbs(projects, item.slug),
+	})),
+);
+const home = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+	title="Directions | Camoka's Portfolio"
+	description="All creative directions in Camoka's portfolio: game development, 3D, video, motion, music, drawing, and more."
+	lang="en"
+>
+	<main class="container page" id="main-content" tabindex="-1">
+		<nav class="crumbs" aria-label="Breadcrumb"><a href={home}><Icon name="arrow-left" size={15} /> Back to home</a></nav>
+		<header>
+			<div class="copy">
+				<p class="label">ordered by current activity</p>
+				<h1>Directions</h1>
+				<p class="description">Everything I work with, from the busiest areas to the quiet ones.</p>
+			</div>
+			<Doodle name="island" width={96} flow class="mark" />
+		</header>
+		<ul class="grid">
+			{items.map((item) => (
+				<DirectionTile direction={item.direction} count={item.slug === "software" ? undefined : item.count} thumbs={item.thumbs} />
+			))}
+		</ul>
+	</main>
+</BaseLayout>
+
+<style>
+	.page { padding-block: var(--space-5) var(--space-8); }
+	.crumbs a { display: inline-flex; align-items: center; gap: var(--space-1); color: var(--color-muted); font-size: var(--text-small); text-decoration: none; }
+	.crumbs a:hover, .crumbs a:focus-visible { color: var(--color-text); text-decoration: underline; text-underline-offset: 0.25rem; }
+	header { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-5); padding-block: var(--space-6); margin-bottom: var(--space-6); border-bottom: 1px solid var(--color-border); }
+	.copy { display: grid; gap: var(--space-2); }
+	h1 { margin: 0; font-size: var(--text-h1); line-height: 1.05; letter-spacing: -0.045em; }
+	.description { margin: 0; max-width: 36rem; color: var(--color-muted); font-size: var(--text-lead); }
+	header :global(.mark) { opacity: 0.6; }
+	.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
+</style>

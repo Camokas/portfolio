@@ -8,6 +8,7 @@
 - [Живой пример со всеми возможностями](src/content/projects/demo-game-prototype.mdx).
 - [Публикация сайта](DEPLOYMENT.md).
 
+Приоритеты работ и направлений: `src/data/priority.mjs` (описание в CONTENT_GUIDE.md). Рисунки автора: `src/data/doodles.ts`.
 Тексты главной: `src/data/home.ts`. Контакты: `src/data/contactLinks.ts`.
 Направления: `src/data/directions.ts`. Работы: `src/content/projects/`.
 Все локальные файлы работы: `public/projects/категория/проект/` (уровней вложенности может быть больше или меньше).

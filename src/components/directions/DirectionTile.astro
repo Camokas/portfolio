@@ -1,0 +1,59 @@
+---
+// Compact direction link: icon, title, one line, project count and up to three still thumbnails.
+import Icon from "../ui/Icon.astro";
+import type { Direction } from "../../data/directions";
+
+interface Props {
+	direction: Direction;
+	count?: number;
+	thumbs?: string[];
+}
+
+const { direction, count, thumbs = [] } = Astro.props;
+const href = `${import.meta.env.BASE_URL}directions/${direction.slug}/`;
+---
+
+<li class="tile">
+	<a href={href}>
+		<span class="top">
+			<span class="icon"><Icon name={direction.icon} size={18} /></span>
+			{count !== undefined && <span class="count">{count} {count === 1 ? "project" : "projects"}</span>}
+		</span>
+		<span class="title">{direction.title}</span>
+		<span class="desc">{direction.description}</span>
+		{thumbs.length > 0 && (
+			<span class="thumbs" aria-hidden="true">
+				{thumbs.map((src) => <img src={src} alt="" width="160" height="120" loading="lazy" decoding="async" />)}
+			</span>
+		)}
+	</a>
+</li>
+
+<style>
+	.tile { min-width: 0; }
+	a {
+		display: grid;
+		align-content: start;
+		gap: var(--space-2);
+		height: 100%;
+		padding: var(--space-4);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		background: var(--color-surface);
+		color: inherit;
+		text-decoration: none;
+		transition: border-color 180ms var(--ease), box-shadow 180ms var(--ease), transform 180ms var(--ease);
+	}
+	@media (hover: hover) {
+		a:hover { border-color: var(--color-border-strong); box-shadow: var(--glow); transform: translateY(-2px); }
+	}
+	a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+	.top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); color: var(--color-faint); }
+	.icon { display: grid; place-items: center; width: 2.1rem; aspect-ratio: 1; border: 1px solid var(--color-border); border-radius: var(--radius-sm); color: var(--color-text); }
+	.count { font-family: var(--font-mono); font-size: var(--text-label); }
+	.title { margin-top: var(--space-2); font-size: var(--text-h3); font-weight: 650; line-height: 1.25; letter-spacing: -0.015em; }
+	.desc { color: var(--color-muted); font-size: var(--text-small); line-height: 1.5; }
+	.thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-1); margin-top: var(--space-2); }
+	.thumbs img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 0.2rem; border: 1px solid var(--color-border); }
+	@media (prefers-reduced-motion: reduce) { a:hover { transform: none; } }
+</style>

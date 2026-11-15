@@ -1,30 +1,25 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import ProjectTimeline from "../../components/projects/ProjectTimeline.astro";
+import ProjectsByYear from "../../components/projects/ProjectsByYear.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { directions } from "../../data/directions";
 import type { Direction } from "../../data/directions";
+import { directionDoodles } from "../../data/doodles";
+import Doodle from "../../components/ui/Doodle.astro";
 import Icon from "../../components/ui/Icon.astro";
 import SoftwareCatalog from "../../components/software/SoftwareCatalog.astro";
+import { rankMap } from "../../data/rankings";
 
 export async function getStaticPaths() {
 	const projects = await getCollection("projects", ({ data }) => !data.draft);
 
-	return directions.map((direction) => {
-		const directionProjects = projects.filter(
-			(project) => project.data.direction === direction.slug,
-		);
-
-		return {
-			params: {
-				slug: direction.slug,
-			},
-			props: {
-				direction,
-				projects: directionProjects,
-			},
-		};
-	});
+	return directions.map((direction) => ({
+		params: { slug: direction.slug },
+		props: {
+			direction,
+			projects: projects.filter((project) => project.data.direction === direction.slug),
+		},
+	}));
 }
 
 interface Props {
@@ -34,6 +29,9 @@ interface Props {
 
 const { direction, projects } = Astro.props;
 const homeUrl = import.meta.env.BASE_URL;
+const ranks = rankMap(projects);
+const isSoftware = direction.slug === "software";
+const doodle = directionDoodles[direction.slug];
 ---
 
 <BaseLayout
@@ -41,141 +39,53 @@ const homeUrl = import.meta.env.BASE_URL;
 	description={direction.description}
 	lang="en"
 >
-	<main class:list={["category-page", { "software-category": direction.slug === "software" }]} id="main-content" tabindex="-1">
-		<a class="back-link" href={homeUrl}>
-			<Icon name="arrow-left" size={17} /> Back to home
-		</a>
+	<main class="category-page container" id="main-content" tabindex="-1">
+		<nav class="crumbs" aria-label="Breadcrumb">
+			<a href={homeUrl}><Icon name="arrow-left" size={15} /> Back to home</a>
+			<span aria-hidden="true">/</span>
+			<a href={`${homeUrl}directions/`}>Directions</a>
+		</nav>
 
 		<header class="category-header">
-			<p class="eyebrow">
-				<Icon name={direction.icon} size={16} /> {direction.slug === "software" ? "My toolkit" : "Creative direction"}
-			</p>
-
-			<h1>{direction.title}</h1>
-
-			<p class="description">{direction.description}</p>
+			<div class="copy">
+				<p class="label"><Icon name={direction.icon} size={14} /> {isSoftware ? "My toolkit" : "Creative direction"}</p>
+				<h1>{direction.title}</h1>
+				<p class="description">{direction.description}</p>
+				{!isSoftware && <p class="label count">{projects.length} {projects.length === 1 ? "project" : "projects"}</p>}
+			</div>
+			{doodle && <Doodle name={doodle} width={120} flow class="mark" />}
 		</header>
 
-		{direction.slug === "software" ? <SoftwareCatalog /> : <section class="projects" aria-labelledby="projects-title">
-			<div class="projects-heading">
-				<h2 id="projects-title">Projects</h2>
-				<span class="project-count">{projects.length} {projects.length === 1 ? 'project' : 'projects'}</span>
-			</div>
-
-			{
-				projects.length > 0 ? (
-					<ProjectTimeline projects={projects} />
-				) : (
-					<p class="empty-message">
-						Projects in this direction will appear here.
-					</p>
-				)
-			}
-		</section>}
+		{isSoftware ? <SoftwareCatalog /> : (
+			<section aria-label="Projects">
+				{projects.length > 0
+					? <ProjectsByYear projects={projects} ranks={ranks} />
+					: <p class="empty-message">Projects in this direction will appear here.</p>}
+			</section>
+		)}
 	</main>
 </BaseLayout>
 
 <style>
-	.software-category .category-header { padding-block: 2rem 2.5rem; }
-	.software-category h1 { font-size: clamp(2.25rem, 5vw, 3.5rem); }
-	.category-page {
-		width: min(calc(100% - 2rem), var(--content-width));
-		margin-inline: auto;
-		padding-block: clamp(1.5rem, 4vw, 3rem);
-	}
-
-	.back-link {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
-		color: var(--color-accent);
-		font-weight: 700;
-		text-decoration: none;
-	}
-
-	.back-link:hover {
-		text-decoration: underline;
-	}
-
-	.back-link:focus-visible {
-		outline: 2px solid var(--color-accent);
-		outline-offset: 0.25rem;
-	}
+	.category-page { padding-block: var(--space-5) var(--space-8); }
+	.crumbs { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-2); color: var(--color-faint); font-size: var(--text-small); }
+	.crumbs a { display: inline-flex; align-items: center; gap: var(--space-1); color: var(--color-muted); text-decoration: none; }
+	.crumbs a:hover, .crumbs a:focus-visible { color: var(--color-text); text-decoration: underline; text-underline-offset: 0.25rem; }
 
 	.category-header {
-		display: grid;
-		gap: 1rem;
-		max-width: 48rem;
-		margin-inline: auto;
-		justify-items: center;
-		text-align: center;
-		padding-block: clamp(2.5rem, 6vw, 4.5rem);
-	}
-
-	.eyebrow {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		margin: 0;
-		color: var(--color-accent);
-		font-size: 0.8rem;
-		font-weight: 700;
-		letter-spacing: 0.16em;
-		text-transform: uppercase;
-	}
-
-	h1 {
-		margin: 0;
-		font-size: clamp(2.5rem, 6vw, 4.75rem);
-		line-height: 1.08;
-		letter-spacing: -0.045em;
-		overflow-wrap: anywhere;
-	}
-
-	.description {
-		max-width: 36rem;
-		margin: 0;
-		color: var(--color-muted);
-		font-size: clamp(1.05rem, 2vw, 1.35rem);
-		line-height: 1.6;
-	}
-
-	.projects {
-		padding-block: clamp(1.5rem, 3vw, 2.5rem);
-		border-top: 1px solid var(--color-border);
-	}
-
-	h2 {
-		margin: 0;
-		font-size: clamp(1.5rem, 3vw, 2rem);
-		line-height: 1.2;
-		letter-spacing: -0.04em;
-	}
-
-	.empty-message {
-		margin: 1.5rem 0 0;
-		padding: 2rem;
-		border-radius: 0.75rem;
-		background: var(--color-surface);
-		text-align: center;
-		color: var(--color-muted);
-		line-height: 1.6;
-	}
-
-	.projects-heading {
 		display: flex;
-		align-items: center;
+		align-items: flex-end;
 		justify-content: space-between;
-		flex-wrap: wrap;
-		gap: 0.75rem;
+		gap: var(--space-5);
+		padding-block: var(--space-6) var(--space-6);
+		margin-bottom: var(--space-6);
+		border-bottom: 1px solid var(--color-border);
 	}
-
-	.project-count {
-		color: var(--color-muted);
-		font-size: 0.85rem;
-		padding: 0.35rem 0.75rem;
-		border: 1px solid var(--color-border);
-		border-radius: 999px;
-	}
-
+	.copy { display: grid; gap: var(--space-2); min-width: 0; }
+	.label { display: inline-flex; align-items: center; gap: var(--space-2); }
+	h1 { margin: 0; font-size: var(--text-h1); line-height: 1.05; letter-spacing: -0.045em; }
+	.description { max-width: 40rem; margin: 0; color: var(--color-muted); font-size: var(--text-lead); line-height: 1.55; }
+	.category-header :global(.mark) { opacity: 0.6; flex: none; }
+	.empty-message { padding: var(--space-5); border: 1px dashed var(--color-border-strong); border-radius: var(--radius-md); color: var(--color-muted); }
+	@media (max-width: 36rem) { .category-header :global(.mark) { width: 4.5rem; } }
 </style>

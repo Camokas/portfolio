@@ -3,7 +3,7 @@ import Icon from "../ui/Icon.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 
 const baseUrl = import.meta.env.BASE_URL;
-const directionsUrl = `${baseUrl}#directions`;
+const directionsUrl = `${baseUrl}directions/`;
 const projectsUrl = `${baseUrl}projects/`;
 const isHomePage = Astro.url.pathname === baseUrl;
 const isDirectionPage = Astro.url.pathname.startsWith(`${baseUrl}directions/`);
@@ -63,9 +63,9 @@ const isProjectsPage = Astro.url.pathname.startsWith(projectsUrl);
 		position: sticky;
 		top: 0;
 		z-index: 10;
-		border-bottom: 1px solid #2d2d2d;
+		border-bottom: 1px solid #2c2b28;
 		border-bottom: 1px solid color-mix(in srgb, var(--color-border) 75%, transparent);
-		background: rgb(14 14 14 / 0.92);
+		background: rgb(15 15 14 / 0.92);
 		background: color-mix(in srgb, var(--color-background) 88%, transparent);
 		-webkit-backdrop-filter: blur(1rem);
 		backdrop-filter: blur(1rem);
@@ -75,8 +75,8 @@ const isProjectsPage = Astro.url.pathname.startsWith(projectsUrl);
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		width: min(calc(100% - 2rem), var(--content-width));
-		min-height: 4.5rem;
+		width: min(calc(100% - 2 * var(--gutter)), var(--content-width));
+		min-height: 4rem;
 		margin-inline: auto;
 		gap: 1rem;
 	}
@@ -85,7 +85,7 @@ const isProjectsPage = Astro.url.pathname.startsWith(projectsUrl);
 		color: var(--color-text);
 		font-size: 1.15rem;
 		font-weight: 800;
-		letter-spacing: -0.03em;
+		letter-spacing: -0.04em;
 		text-decoration: none;
 	}
 

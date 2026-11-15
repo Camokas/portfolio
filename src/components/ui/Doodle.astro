@@ -1,24 +1,33 @@
 ---
 // Decorative hand-drawn sketch by the author. Purely visual, hidden from assistive tech.
+// Position it with a class from the parent (it is absolutely positioned by default,
+// or pass `flow` to keep it in the normal layout). Sizes come from src/data/doodles.ts.
+import { doodles, type DoodleName } from "../../data/doodles";
+
 interface Props {
-	name: "author" | "ducks" | "island" | "stars" | "workspace" | "signature-line" | "signature-stacked" | "signature-tilted";
-	width: number;
-	height: number;
+	name: DoodleName;
+	/** Rendered width in CSS pixels (height follows the drawing's ratio). */
+	width?: number;
 	class?: string;
+	flow?: boolean;
+	eager?: boolean;
 }
 
-const { name, width, height, class: className } = Astro.props;
+const { name, width, class: className, flow = false, eager = false } = Astro.props;
+const size = doodles[name];
+const w = width ?? size.width;
+const h = Math.round((w * size.height) / size.width);
 const src = `${import.meta.env.BASE_URL}decor/${name}.webp`;
 ---
 
 <img
-	class:list={["doodle", `doodle-${name}`, className]}
+	class:list={["doodle", `doodle-${name}`, { flow }, className]}
 	src={src}
-	width={width}
-	height={height}
+	width={w}
+	height={h}
 	alt=""
 	aria-hidden="true"
-	loading="lazy"
+	loading={eager ? "eager" : "lazy"}
 	decoding="async"
 	draggable="false"
 />
@@ -29,11 +38,12 @@ const src = `${import.meta.env.BASE_URL}decor/${name}.webp`;
 		z-index: 0;
 		height: auto;
 		max-width: none;
-		opacity: 0.2;
+		opacity: 0.4;
 		pointer-events: none;
 		user-select: none;
 		-webkit-user-select: none;
 	}
+	.doodle.flow { position: relative; max-width: 100%; }
 
 	@media print {
 		.doodle { display: none; }
