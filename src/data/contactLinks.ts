@@ -12,9 +12,9 @@ export interface ContactLink {
 export const contactLinks = [
 	{
 		label: "Email",
-		detail: "burstagain06@gmail.com",
+		detail: "hello.camoka@gmail.com",
 		description: "Project enquiries and collaboration.",
-		href: "mailto:burstagain06@gmail.com",
+		href: "mailto:hello.camoka@gmail.com",
 		icon: "mail",
 	},
 	{
