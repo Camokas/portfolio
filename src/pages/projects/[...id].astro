@@ -229,7 +229,8 @@ const otherAudio = musicTrack ? project.data.audio.slice(1) : project.data.audio
 	.project-header { position: relative; }
 	.project-header :global(.project-accent) { right: 0; top: 0; opacity: 0.45; }
 	.project-header :global(.mark) { opacity: 0.55; }
-	.the-end { display: grid; justify-items: end; gap: var(--space-1); max-width: 70rem; margin: var(--space-6) auto 0; }
+	.the-end { display: grid; justify-items: center; gap: var(--space-2); max-width: 70rem; margin: var(--space-6) auto 0; text-align: center; }
+	.the-end :global(.doodle) { margin-inline: auto; }
 	.the-end :global(.doodle) { opacity: 0.45; }
 	@media (max-width: 56rem) { .project-header, .project-header:not(:has(.key-preview)) { grid-template-columns: minmax(0, 1fr); } .project-header :global(.mark) { display: none; } }
 
