@@ -150,6 +150,7 @@ const [primaryContacts, secondaryContacts] = [contactLinks.slice(0, 2), contactL
 	.services { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); margin: var(--space-2) 0 0; }
 	.services a { padding: 0.2rem 0.65rem; border: 1px solid var(--color-border-strong); border-radius: 999px; color: var(--color-muted); font-size: var(--text-small); text-decoration: none; }
 	.services a:hover { color: var(--color-text); border-color: var(--color-text); }
+	@media (pointer: coarse) { .services a { display: inline-flex; align-items: center; min-height: 2.75rem; } }
 	.alias { margin: 0; color: var(--color-muted); font-size: clamp(1.1rem, 2.4vw, 1.5rem); letter-spacing: -0.02em; }
 	.lead { margin: var(--space-2) 0 0; max-width: 34rem; color: var(--color-muted); font-size: var(--text-lead); line-height: 1.55; }
 	.actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-4); }

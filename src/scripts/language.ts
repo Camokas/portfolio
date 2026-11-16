@@ -132,7 +132,7 @@ function formatDates(root: Document | Element, language: SiteLanguage): void {
 		if (Number.isNaN(date.getTime())) return;
 		const format = time.dataset.dateFormat;
 		const options: Intl.DateTimeFormatOptions = format === "commit"
-			? { dateStyle: "medium", timeStyle: "short" }
+			? { dateStyle: "medium" }
 			: { year: "numeric", month: format === "month-short" ? "short" : "long", timeZone: "UTC" };
 		time.textContent = new Intl.DateTimeFormat(locale, options).format(date);
 	});
