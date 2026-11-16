@@ -23,3 +23,11 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 .vs/
+
+# Private owner interviews and AI handoff notes (never publish)
+/.private-context/
+
+# Local AI-assistant instructions and tooling (contain local paths; never publish)
+/AGENTS.md
+/CLAUDE.md
+/.claude/

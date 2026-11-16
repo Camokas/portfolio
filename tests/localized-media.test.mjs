@@ -17,7 +17,7 @@ test('leaves unpaired assets and data URLs intact',()=>{
 });
 
 test('switches Astro development image-service and full-size filesystem URLs',()=>{
- const original='/@fs/C:/Users/Camoka/Desktop/Portfolio Site/public/'+pair.en;
+ const original='/@fs/C:/dev/site/public/'+pair.en;
  const service='/Portfolio-Site/_image/?'+new URLSearchParams({href:original+'?origWidth=835&origHeight=427&origFormat=webp',w:'835',f:'webp'});
  for (const src of [original,service,'http://localhost:4321'+service]) {
    assert.equal(resolve(src,'ru'),'/Portfolio-Site/'+pair.ru);
