@@ -108,6 +108,9 @@ export function pickHighlights(entries, { pinnedIds = [], limit, now = Date.now(
 	const scored = pool
 		.filter((entry) => !picked.includes(entry))
 		.map((entry) => ({ entry, score: scoreProject(entry, { now, config }).total }));
+	// One card per "family" (misform, misform-models, ...): the first word of the file name.
+	const familyOf = (entry) => entry.id.split("/").pop().toLowerCase().split("-")[0];
+	const families = new Set(picked.map(familyOf));
 	const perDirection = new Map();
 	for (const entry of picked) perDirection.set(entry.data.direction, (perDirection.get(entry.data.direction) ?? 0) + 1);
 	while (picked.length < max && scored.length) {
@@ -116,6 +119,7 @@ export function pickHighlights(entries, { pinnedIds = [], limit, now = Date.now(
 		scored.forEach(({ entry, score }, index) => {
 			const used = perDirection.get(entry.data.direction) ?? 0;
 			if (used >= config.highlights.perDirection) return;
+			if (families.has(familyOf(entry))) return;
 			const value = score - used * config.highlights.repeatPenalty;
 			const better =
 				value > bestValue ||
@@ -125,6 +129,7 @@ export function pickHighlights(entries, { pinnedIds = [], limit, now = Date.now(
 		if (best < 0) break;
 		const [{ entry }] = scored.splice(best, 1);
 		picked.push(entry);
+		families.add(familyOf(entry));
 		perDirection.set(entry.data.direction, (perDirection.get(entry.data.direction) ?? 0) + 1);
 	}
 	return picked;

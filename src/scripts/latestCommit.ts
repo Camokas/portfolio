@@ -102,7 +102,6 @@ function showCommit(commit: CachedCommit): void {
 		document.documentElement.lang || undefined,
 		{
 			dateStyle: "medium",
-			timeStyle: "short",
 		},
 	);
 

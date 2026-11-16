@@ -33,7 +33,7 @@
 	--color-surface-2: #1f1f1d;
 	--color-text: #efece4;
 	--color-muted: #adaaa1;
-	--color-faint: #77756d;
+	--color-faint: #8b897f;
 	--color-accent: #f4f1e8;
 	--color-border: #34332f;
 	--color-border-strong: #54524b;
@@ -55,7 +55,7 @@
 	--space-8: clamp(4rem, 10vw, 7.5rem);
 
 	/* Type scale */
-	--text-label: 0.72rem;
+	--text-label: 0.78rem;
 	--text-small: 0.85rem;
 	--text-body: 1rem;
 	--text-lead: clamp(1.05rem, 1.6vw, 1.25rem);

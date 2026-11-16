@@ -5,8 +5,16 @@ export const home = {
 	pageDescription: "Camoka's multimedia portfolio featuring creative and development projects.",
 	eyebrow: "Portfolio website",
 	name: "Camoka",
-	alias: "or Daniil Doroshkin",
-	heroLine: "I make games, 3D, video, motion, music, and drawings, and keep all of it here as a long-term archive.",
+	alias: "aka Daniil Doroshkin",
+	heroLine: "I make games, 3D models, video, motion, music, and drawings. Everything is here, from first experiments to the latest builds.",
+	/** Short «what I can make for you» row under the hero buttons: label, direction slug. */
+	servicesLabel: "Open to projects in",
+	services: [
+		{ label: "Video editing", slug: "video-editing" },
+		{ label: "3D models", slug: "3d-modeling" },
+		{ label: "Motion design", slug: "motion-design" },
+		{ label: "Game tools & shaders", slug: "game-development" },
+	],
 	heroArtCaption: "Drawn by me",
 	aboutTitle: "About this portfolio",
 	aboutParagraphs: [
